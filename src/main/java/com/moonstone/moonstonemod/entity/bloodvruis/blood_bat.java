@@ -5,6 +5,8 @@ import com.google.common.collect.Multimap;
 import com.moonstone.moonstonemod.MoonStoneMod;
 import com.moonstone.moonstonemod.init.EntityTs;
 import com.moonstone.moonstonemod.item.BloodVirus.dna.bat_cell;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -25,42 +27,43 @@ import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.UUID;
 
 public class blood_bat extends TamableAnimal {
     public blood_bat(EntityType<? extends blood_bat> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
     }
     public int time = 0;
+    public final AnimationState flyAnimationState = new AnimationState();
+    public final AnimationState restAnimationState = new AnimationState();
 
-
-    public Multimap<Attribute, AttributeModifier> getAtt(UUID uuid) {
-        Multimap<Attribute, AttributeModifier> modifierMultimap = HashMultimap.create();
-        modifierMultimap.put(Attributes.ARMOR, new AttributeModifier(uuid, MoonStoneMod.MODID+":cell_immortal", 10, AttributeModifier.Operation.ADDITION));
+    public Multimap<Holder<Attribute>, AttributeModifier> getAtt() {
+        Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap = HashMultimap.create();
+        modifierMultimap.put(Attributes.ARMOR, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"moonstone.bat"), 10, AttributeModifier.Operation.ADD_VALUE));
         return modifierMultimap;
     }
-    public Multimap<Attribute, AttributeModifier> Rage(UUID uuid) {
-        Multimap<Attribute, AttributeModifier> modifierMultimap = HashMultimap.create();
-        modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, MoonStoneMod.MODID+":cell_immortal", -0.5, AttributeModifier.Operation.MULTIPLY_TOTAL));
+    public Multimap<Holder<Attribute>, AttributeModifier> Rage() {
+        Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap = HashMultimap.create();
+        modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"moonstone.bat"), -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         return modifierMultimap;
     }
     @Override
     public void tick() {
         super.tick();
+        this.setupAnimationStates();
         this.setNoGravity(true);
         if (this.getTags().contains(bat_cell.cell_immortal)){
-            this.getAttributes().addTransientAttributeModifiers(getAtt(this.uuid));
+            this.getAttributes().addTransientAttributeModifiers(getAtt());
         }
         if (this.getTags().contains(bat_cell.cell_rage)){
-            this.getAttributes().addTransientAttributeModifiers(Rage(this.uuid));
+            this.getAttributes().addTransientAttributeModifiers(Rage());
 
         }
         if (this.getTags().contains(bat_cell.cell_fear)){
@@ -77,7 +80,7 @@ public class blood_bat extends TamableAnimal {
             List<LivingEntity> items = this.level().getEntitiesOfClass(LivingEntity.class, new AABB(position.x - is, position.y - is, position.z - is, position.x + is, position.y + is, position.z + is));
             for (LivingEntity livingEntity : items) {
 
-                ResourceLocation name = ForgeRegistries.ENTITY_TYPES.getKey(livingEntity.getType());
+                ResourceLocation name = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
                 if (name!= null) {
                     if (!name.getNamespace().equals(MoonStoneMod.MODID)) {
                         if (this.getOwner() != null && !this.getOwner().is(livingEntity)&&this.getTarget()!=null) {
@@ -173,7 +176,7 @@ public class blood_bat extends TamableAnimal {
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4F));
         this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         this.goalSelector.addGoal(7, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -230,7 +233,7 @@ public class blood_bat extends TamableAnimal {
 
             }
         }
-        if ( this.getOwner()!= null&&this.getTarget()== null) {
+        if ( this.getOwner()!= null) {
             float m  = (float) calculateDistance(this.getOwner() ,this);
             if (m>4) {
                 double d2 = this.getOwner().getX() + 0.5D - this.getX();
@@ -253,5 +256,16 @@ public class blood_bat extends TamableAnimal {
 
             }
         }
+    }
+
+    private void setupAnimationStates() {
+
+        this.restAnimationState.stop();
+        this.flyAnimationState.startIfStopped(this.tickCount);
+
+    }
+    @Override
+    public boolean isFood(ItemStack pStack) {
+        return false;
     }
 }

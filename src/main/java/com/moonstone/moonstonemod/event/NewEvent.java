@@ -1,6 +1,7 @@
 package com.moonstone.moonstonemod.event;
 
 import com.moonstone.moonstonemod.init.EntityTs;
+import com.moonstone.moonstonemod.item.BloodVirus.dna.bat_cell;
 import com.moonstone.moonstonemod.item.nightmare.nightmare_head;
 import com.moonstone.moonstonemod.item.nightmare.nightmare_heart;
 import com.moonstone.moonstonemod.item.nightmare.nightmare_orb;
@@ -26,6 +27,7 @@ public class NewEvent {
     public void LivingHurtEvent(LivingIncomingDamageEvent event){
         nightmare_heart.NigH(event);
         nightmare_head.headHurt(event);
+        bat_cell.Bat(event);
     }
     @SubscribeEvent
     public void LivingHealEvent(LivingDeathEvent event) {

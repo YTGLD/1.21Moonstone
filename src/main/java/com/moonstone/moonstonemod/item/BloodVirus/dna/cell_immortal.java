@@ -2,6 +2,7 @@ package com.moonstone.moonstonemod.item.BloodVirus.dna;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.moonstone.moonstonemod.Config;
 import com.moonstone.moonstonemod.MoonStoneMod;
 import com.moonstone.moonstonemod.moonstoneitem.BloodViru;
 import net.minecraft.ChatFormatting;
@@ -27,13 +28,20 @@ public class cell_immortal extends BloodViru {
     }
 
 
+    @Override
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
+        slotContext.entity().getAttributes().addTransientAttributeModifiers(getAttributeModifiers(stack));
+    }
 
     @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-        Multimap<Holder<Attribute>, AttributeModifier> linkedHashMultimap = HashMultimap.create();
-        linkedHashMultimap.put(Attributes.ARMOR, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+this.getDescriptionId()), 10, AttributeModifier.Operation.ADD_VALUE));
+    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
+        slotContext.entity().getAttributes().removeAttributeModifiers(getAttributeModifiers(stack));
+    }
 
-        return super.getAttributeModifiers(slotContext, id, stack);
+    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(ItemStack stack) {
+        Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap = HashMultimap.create();
+        modifierMultimap.put(Attributes.ARMOR, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage" + this.getDescriptionId()),10, AttributeModifier.Operation.ADD_VALUE));
+        return modifierMultimap;
     }
 }
 

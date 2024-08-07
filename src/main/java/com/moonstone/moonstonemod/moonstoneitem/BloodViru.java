@@ -28,11 +28,6 @@ public class BloodViru extends Item implements ICurioItem {
 
     }
 
-    @Override
-    public boolean canEquip(SlotContext slotContext, ItemStack stack) {
-        return !Handler.hascurio(slotContext.entity(),stack.getItem());
-    }
-
     @NotNull
     @Override
     public ICurio.DropRule getDropRule(SlotContext slotContext, DamageSource source, int lootingLevel, boolean recentlyHit, ItemStack stack) {

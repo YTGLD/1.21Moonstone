@@ -9,7 +9,9 @@ import com.moonstone.moonstonemod.init.EntityTs;
 import com.moonstone.moonstonemod.init.Items;
 import com.moonstone.moonstonemod.moonstoneitem.BloodViru;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,8 +23,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.List;
@@ -103,31 +105,27 @@ public class bat_cell extends BloodViru {
         }
     }
 
-    @Override
-    public boolean canEquip(SlotContext slotContext, ItemStack stack) {
-        if (Handler.hascurio(slotContext.entity(),Items.cell.get())){
-            return false;
-        }
-        if (Handler.hascurio(slotContext.entity(),Items.giant.get())){
-            return false;
-        }
-        return true;
-    }
-
-    public static Multimap<Attribute, AttributeModifier> modifierMultimap (LivingEntity bat, float owner){
-        Multimap<Attribute, AttributeModifier> modifierMultimap =HashMultimap.create();
-        modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier((bat.getUUID()), MoonStoneMod.MODID + "bat",owner, AttributeModifier.Operation.ADDITION));
+    public static Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap (LivingEntity bat, float owner){
+        Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap =HashMultimap.create();
+        modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier((ResourceLocation.withDefaultNamespace("base_attack_damage"+Items.bat_cell.get().getDescriptionId())),owner, AttributeModifier.Operation.ADD_VALUE));
         return modifierMultimap;
     }
-    public static Multimap<Attribute, AttributeModifier> modifierMultimapA(LivingEntity bat,float owner){
-        Multimap<Attribute, AttributeModifier> modifierMultimap =HashMultimap.create();
-        modifierMultimap.put(Attributes.ARMOR, new AttributeModifier((bat.getUUID()), MoonStoneMod.MODID + "bat",owner, AttributeModifier.Operation.ADDITION));
-        modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier((bat.getUUID()), MoonStoneMod.MODID + "bat",owner, AttributeModifier.Operation.ADDITION));
+    public static Multimap<Holder<Attribute>, AttributeModifier> modifierMultimapA(LivingEntity bat, float owner){
+        Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap =HashMultimap.create();
+        modifierMultimap.put(Attributes.ARMOR, new AttributeModifier((ResourceLocation.withDefaultNamespace("base_attack_damage"+Items.bat_cell.get().getDescriptionId())),owner, AttributeModifier.Operation.ADD_VALUE));
+        modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+Items.bat_cell.get().getDescriptionId()),owner, AttributeModifier.Operation.ADD_VALUE));
         return modifierMultimap;
     }
     @Override
-    public void appendHoverText(ItemStack stack, @javax.annotation.Nullable Level level, List<Component> tooltip, TooltipFlag flags) {
-        super.appendHoverText(stack, level, tooltip, flags);
+    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
+        Multimap<Holder<Attribute>, AttributeModifier> linkedHashMultimap = HashMultimap.create();
+        CuriosApi
+                .addSlotModifier(linkedHashMultimap, "dna", ResourceLocation.withDefaultNamespace("base_attack_damage"+this.getDescriptionId()), 3, AttributeModifier.Operation.ADD_VALUE);
+        return linkedHashMultimap;
+    }
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext pContext,  List<Component> tooltip, TooltipFlag flags) {
+        super.appendHoverText(stack, pContext, tooltip, flags);
         tooltip.add(Component.translatable("item.bat_cell.tool.string").withStyle(ChatFormatting.DARK_RED));
         tooltip.add(Component.translatable("item.bat_cell.tool.string.1").withStyle(ChatFormatting.DARK_RED));
         tooltip.add(Component.translatable("item.bat_cell.tool.string.2").withStyle(ChatFormatting.DARK_RED));

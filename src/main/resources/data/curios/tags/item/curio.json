@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
 
+
     "moonstone:nightmareanchor",
     "moonstone:nightmarecharm",
     "moonstone:nightmareeye",
@@ -33,7 +34,6 @@
 
     "moonstone:gorillacake",
     "moonstone:nightmare_head",
-    "moonstone:nightmare_cube",
-    "moonstone:nano_box"
+    "moonstone:nightmare_cube"
   ]
 }

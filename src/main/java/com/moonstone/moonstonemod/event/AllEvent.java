@@ -872,19 +872,6 @@ public class AllEvent {
     }
 
     @SubscribeEvent
-    public void bloodvirusLiving(LivingEntityUseItemEvent.Finish event){
-        if (event.getEntity() instanceof Player player){
-            if (Handler.hascurio(player,  Items.bloodvirus.get())){
-                if (event.getItem().getFoodProperties(player)!= null){
-                    player.addEffect( new MobEffectInstance(MobEffects.WEAKNESS, 300 ,1));
-                    player.addEffect( new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 300 ,1));
-                    player.addEffect( new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 300 ,1));
-
-                }
-            }
-        }
-    }
-    @SubscribeEvent
     public void bloodvirusLiving(LivingKnockBackEvent event) {
         if (event.getEntity() instanceof Player player){
             if (Handler.hascurio(player,  Items.bloodvirus.get())){

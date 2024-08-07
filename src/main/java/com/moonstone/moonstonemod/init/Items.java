@@ -20,9 +20,9 @@ import com.moonstone.moonstonemod.item.nanodoom.buyme.wind_and_rain;
 import com.moonstone.moonstonemod.item.nanodoom.*;
 import com.moonstone.moonstonemod.item.nightmare.*;
 import com.moonstone.moonstonemod.item.plague.ALL.*;
-import com.moonstone.moonstonemod.item.plague.bloodvirus;
+import com.moonstone.moonstonemod.item.bloodvirus;
 import com.moonstone.moonstonemod.item.plague.medicine.med.*;
-import com.moonstone.moonstonemod.item.plague.necora;
+import com.moonstone.moonstonemod.item.necora;
 import com.moonstone.moonstonemod.moonstoneitem.extend.apple;
 import com.moonstone.moonstonemod.moonstoneitem.extend.medicinebox;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -168,6 +168,19 @@ public class Items {
     public static final DeferredHolder<Item,?> giant_nightmare =REGISTRY.register("giant_nightmare", com.moonstone.moonstonemod.item.TheNecora.bnabush.giant_nightmare::new);
     public static final DeferredHolder<Item,?> nightmare_cube =REGISTRY.register("nightmare_cube", com.moonstone.moonstonemod.item.nightmare.nightmare_cube::new);
 
+
+
+    public static final DeferredHolder<Item,?> bat_cell =REGISTRY.register("bat_cell", com.moonstone.moonstonemod.item.BloodVirus.dna.bat_cell::new);
+    public static final DeferredHolder<Item,?> cell_doctor =REGISTRY.register("cell_doctor", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_doctor::new);
+    public static final DeferredHolder<Item,?> cell_desecrate =REGISTRY.register("cell_desecrate", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_desecrate::new);
+    public static final DeferredHolder<Item,?> cell_harvest =REGISTRY.register("cell_harvest", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_harvest::new);
+
+    public static final DeferredHolder<Item,?> cell_scientist =REGISTRY.register("cell_scientist", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_scientist::new);
+    public static final DeferredHolder<Item,?> cell_immortal =REGISTRY.register("cell_immortal", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_immortal::new);
+    public static final DeferredHolder<Item,?> cell_rage =REGISTRY.register("cell_rage", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_rage::new);
+    public static final DeferredHolder<Item,?> cell_blood_attack =REGISTRY.register("cell_blood_attack", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_blood_attack::new);
+    public static final DeferredHolder<Item,?> cell_fear =REGISTRY.register("cell_fear", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_fear::new);
+    public static final DeferredHolder<Item,?> cell_not_do =REGISTRY.register("cell_not_do", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_not_do::new);
 
 
 

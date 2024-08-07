@@ -1,4 +1,4 @@
-package com.moonstone.moonstonemod.item.plague;
+package com.moonstone.moonstonemod.item;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -29,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.List;
@@ -112,7 +113,14 @@ public class bloodvirus extends BloodViru {
         }
         return false;
     }
+    @Override
+    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
+        Multimap<Holder<Attribute>, AttributeModifier>  multimap = HashMultimap.create();
+        CuriosApi
+                .addSlotModifier(multimap, "ncrdna", ResourceLocation.withDefaultNamespace("base_attack_damage"+this.getDescriptionId()), 2, AttributeModifier.Operation.ADD_VALUE);
 
+        return multimap;
+    }
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         slotContext.entity().getAttributes().addTransientAttributeModifiers(this.getAttributeModifiers(  slotContext.entity()));
@@ -157,7 +165,6 @@ public class bloodvirus extends BloodViru {
             pTooltipComponents.add(Component.translatable("item.bloodvirus.tool.string.7").withStyle(ChatFormatting.RED));
             pTooltipComponents.add(Component.translatable("item.bloodvirus.tool.string.8").withStyle(ChatFormatting.RED));
             pTooltipComponents.add(Component.translatable("item.bloodvirus.tool.string.9").withStyle(ChatFormatting.RED));
-            pTooltipComponents.add(Component.translatable("item.bloodvirus.tool.string.10").withStyle(ChatFormatting.RED));
         } else {
             pTooltipComponents.add(Component.translatable("按下SHIFT查看").withStyle(ChatFormatting.DARK_RED));
         }

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.moonstone.moonstonemod.Handler;
 import com.moonstone.moonstonemod.client.renderer.MRender;
+import com.moonstone.moonstonemod.entity.bloodvruis.test_blood;
 import com.moonstone.moonstonemod.entity.nightmare.nightmare_giant;
 import com.moonstone.moonstonemod.entity.zombie.red_entity;
 import com.moonstone.moonstonemod.entity.zombie.test_e;
@@ -45,6 +46,10 @@ public class StrengtheningLayer<T extends LivingEntity, M extends EntityModel<T>
 
         new orb(matrices, vertexConsumers, light, entity);
 
+        if (entity instanceof test_blood){
+            matrices.scale(0.33f,0.33f,0.33f);
+            new CircleCubeBoom(matrices, vertexConsumers, light, entity);
+        }
         if (entity instanceof nightmare_giant){
             matrices.pushPose();
             renderCircle3(matrices, vertexConsumers, light, 0.0F, 1, 0.0F, 0.33f, entity);

@@ -1,4 +1,4 @@
-package com.moonstone.moonstonemod.item.plague;
+package com.moonstone.moonstonemod.item;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
