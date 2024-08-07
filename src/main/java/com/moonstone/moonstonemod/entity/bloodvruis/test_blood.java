@@ -1,6 +1,5 @@
 package com.moonstone.moonstonemod.entity.bloodvruis;
 
-import com.moonstone.moonstonemod.entity.necora.cell_zombie;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
