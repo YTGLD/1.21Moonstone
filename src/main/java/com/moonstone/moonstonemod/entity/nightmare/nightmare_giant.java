@@ -160,9 +160,6 @@ public class nightmare_giant extends TamableAnimal implements OwnableEntity,Vibr
         return 0.0F;
     }
 
-    public boolean isInvulnerableTo(DamageSource p_219427_) {
-        return this.isDiggingOrEmerging() && !p_219427_.is(DamageTypeTags.BYPASSES_INVULNERABILITY) ? true : super.isInvulnerableTo(p_219427_);
-    }
 
     boolean isDiggingOrEmerging() {
         return this.hasPose(Pose.DIGGING) || this.hasPose(Pose.EMERGING);
@@ -533,12 +530,6 @@ public class nightmare_giant extends TamableAnimal implements OwnableEntity,Vibr
         SonicBoom.setCooldown(this, 20);
     }
 
-    @Override
-    protected EntityDimensions getDefaultDimensions(Pose pPose) {
-        EntityDimensions entitydimensions = super.getDimensions(pPose);
-        return this.isDiggingOrEmerging() ? EntityDimensions.fixed(entitydimensions.width(), 1.0F) : entitydimensions;
-
-    }
 
 
     public boolean isPushable() {

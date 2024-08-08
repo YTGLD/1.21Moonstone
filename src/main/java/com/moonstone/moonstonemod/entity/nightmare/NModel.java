@@ -24,12 +24,13 @@ public class NModel<T extends nightmare_giant> extends HierarchicalModel<T> {
     protected final ModelPart rightRibcage;
     private final List<ModelPart> tendrilsLayerModelParts;
     private final List<ModelPart> heartLayerModelParts;
+    private final List<ModelPart> bioluminescentLayerModelParts;
     private final List<ModelPart> pulsatingSpotsLayerModelParts;
 
-    public NModel(ModelPart p_233512_) {
+    public NModel(ModelPart pRoot) {
         super(RenderType::entityCutoutNoCull);
-        this.root = p_233512_;
-        this.bone = p_233512_.getChild("bone");
+        this.root = pRoot;
+        this.bone = pRoot.getChild("bone");
         this.body = this.bone.getChild("body");
         this.head = this.body.getChild("head");
         this.rightLeg = this.bone.getChild("right_leg");
@@ -42,29 +43,34 @@ public class NModel<T extends nightmare_giant> extends HierarchicalModel<T> {
         this.leftRibcage = this.body.getChild("left_ribcage");
         this.tendrilsLayerModelParts = ImmutableList.of(this.leftTendril, this.rightTendril);
         this.heartLayerModelParts = ImmutableList.of(this.body);
+        this.bioluminescentLayerModelParts = ImmutableList.of(this.head, this.leftArm, this.rightArm, this.leftLeg, this.rightLeg);
         this.pulsatingSpotsLayerModelParts = ImmutableList.of(this.body, this.head, this.leftArm, this.rightArm, this.leftLeg, this.rightLeg);
     }
 
-    public void setupAnim(T p_233531_, float p_233532_, float p_233533_, float p_233534_, float p_233535_, float p_233536_) {
+    /**
+     * Sets this entity's model rotation angles
+     */
+    public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        float f = p_233534_ - (float)p_233531_.tickCount;
-        this.animateHeadLookTarget(p_233535_, p_233536_);
-        this.animateWalk(p_233532_, p_233533_);
-        this.animateIdlePose(p_233534_);
-        this.animateTendrils(p_233531_, p_233534_, f);
-        this.animate(p_233531_.attackAnimationState, WardenAnimation.WARDEN_ATTACK, p_233534_);
-        this.animate(p_233531_.diggingAnimationState, WardenAnimation.WARDEN_DIG, p_233534_);
-        this.animate(p_233531_.emergeAnimationState, WardenAnimation.WARDEN_EMERGE, p_233534_);
-        this.animate(p_233531_.sniffAnimationState, WardenAnimation.WARDEN_SNIFF, p_233534_);
+        float f = pAgeInTicks - (float)pEntity.tickCount;
+        this.animateHeadLookTarget(pNetHeadYaw, pHeadPitch);
+        this.animateWalk(pLimbSwing, pLimbSwingAmount);
+        this.animateIdlePose(pAgeInTicks);
+        this.animateTendrils(pEntity, pAgeInTicks, f);
+        this.animate(pEntity.attackAnimationState, WardenAnimation.WARDEN_ATTACK, pAgeInTicks);
+        this.animate(pEntity.diggingAnimationState, WardenAnimation.WARDEN_DIG, pAgeInTicks);
+        this.animate(pEntity.emergeAnimationState, WardenAnimation.WARDEN_EMERGE, pAgeInTicks);
+        this.animate(pEntity.roarAnimationState, WardenAnimation.WARDEN_ROAR, pAgeInTicks);
+        this.animate(pEntity.sniffAnimationState, WardenAnimation.WARDEN_SNIFF, pAgeInTicks);
     }
 
-    private void animateHeadLookTarget(float p_233517_, float p_233518_) {
-        this.head.xRot = p_233518_ * ((float)Math.PI / 180F);
-        this.head.yRot = p_233517_ * ((float)Math.PI / 180F);
+    private void animateHeadLookTarget(float pYaw, float pPitch) {
+        this.head.xRot = pPitch * (float) (Math.PI / 180.0);
+        this.head.yRot = pYaw * (float) (Math.PI / 180.0);
     }
 
-    private void animateIdlePose(float p_233515_) {
-        float f = p_233515_ * 0.1F;
+    private void animateIdlePose(float pAgeInTicks) {
+        float f = pAgeInTicks * 0.1F;
         float f1 = Mth.cos(f);
         float f2 = Mth.sin(f);
         this.head.zRot += 0.06F * f1;
@@ -73,18 +79,18 @@ public class NModel<T extends nightmare_giant> extends HierarchicalModel<T> {
         this.body.xRot += 0.025F * f1;
     }
 
-    private void animateWalk(float p_233539_, float p_233540_) {
-        float f = Math.min(0.5F, 3.0F * p_233540_);
-        float f1 = p_233539_ * 0.8662F;
+    private void animateWalk(float pLimbSwing, float pLimbSwingAmount) {
+        float f = Math.min(0.5F, 3.0F * pLimbSwingAmount);
+        float f1 = pLimbSwing * 0.8662F;
         float f2 = Mth.cos(f1);
         float f3 = Mth.sin(f1);
         float f4 = Math.min(0.35F, f);
         this.head.zRot += 0.3F * f3 * f;
-        this.head.xRot += 1.2F * Mth.cos(f1 + ((float)Math.PI / 2F)) * f4;
+        this.head.xRot = this.head.xRot + 1.2F * Mth.cos(f1 + (float) (Math.PI / 2)) * f4;
         this.body.zRot = 0.1F * f3 * f;
         this.body.xRot = 1.0F * f2 * f4;
         this.leftLeg.xRot = 1.0F * f2 * f;
-        this.rightLeg.xRot = 1.0F * Mth.cos(f1 + (float)Math.PI) * f;
+        this.rightLeg.xRot = 1.0F * Mth.cos(f1 + (float) Math.PI) * f;
         this.leftArm.xRot = -(0.8F * f2 * f);
         this.leftArm.zRot = 0.0F;
         this.rightArm.xRot = -(0.8F * f3 * f);
@@ -103,12 +109,13 @@ public class NModel<T extends nightmare_giant> extends HierarchicalModel<T> {
         this.rightArm.y = -13.0F;
     }
 
-    private void animateTendrils(T p_233527_, float p_233528_, float p_233529_) {
-        float f = p_233527_.getTendrilAnimation(p_233529_) * (float)(Math.cos((double)p_233528_ * 2.25D) * Math.PI * (double)0.1F);
+    private void animateTendrils(T pEntity, float pAgeInTicks, float pPartialTick) {
+        float f = pEntity.getTendrilAnimation(pPartialTick) * (float)(Math.cos((double)pAgeInTicks * 2.25) * Math.PI * 0.1F);
         this.leftTendril.xRot = f;
         this.rightTendril.xRot = -f;
     }
 
+    @Override
     public ModelPart root() {
         return this.root;
     }
@@ -119,6 +126,10 @@ public class NModel<T extends nightmare_giant> extends HierarchicalModel<T> {
 
     public List<ModelPart> getHeartLayerModelParts() {
         return this.heartLayerModelParts;
+    }
+
+    public List<ModelPart> getBioluminescentLayerModelParts() {
+        return this.bioluminescentLayerModelParts;
     }
 
     public List<ModelPart> getPulsatingSpotsLayerModelParts() {

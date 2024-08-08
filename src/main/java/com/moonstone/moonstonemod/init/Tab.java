@@ -13,6 +13,78 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class Tab {
 
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MoonStoneMod.MODID);
+    public static final DeferredHolder<CreativeModeTab,?> DNA = TABS.register("moonstone_item_dna",()->CreativeModeTab.builder()
+            .icon(()->new ItemStack(Items.necora.get()))
+            .title(Component.translatable("itemGroup.tabmoonstone.dna"))
+            .displayItems((a,b)->{
+                b.accept(new ItemStack(Items.dna.get()));
+                b.accept(new ItemStack(Items.fungus.get()));
+                b.accept(new ItemStack(Items.germ.get()));
+                b.accept(new ItemStack(Items.parasite.get()));
+                b.accept(new ItemStack(Items.virus.get()));
+                b.accept(new ItemStack(Items.cell.get()));
+                b.accept(new ItemStack(Items.adrenaline.get()));
+                b.accept(new ItemStack(Items.cell_mummy.get()));
+                b.accept(new ItemStack(Items.cell_boom.get()));
+                b.accept(new ItemStack(Items.cell_calcification.get()));
+                b.accept(new ItemStack(Items.cell_blood.get()));
+                b.accept(new ItemStack(Items.air.get()));
+                b.accept(new ItemStack(Items.motor.get()));
+                b.accept(new ItemStack(Items.watergen.get()));
+                b.accept(new ItemStack(Items.giant.get()));
+                b.accept(new ItemStack(Items.giant_nightmare.get()));
+
+                b.accept(new ItemStack(Items.botton.get()));
+                b.accept(new ItemStack(Items.catalyzer.get()));
+
+
+                b.accept(new ItemStack(Items.batskill.get()));
+
+
+                b.accept(new ItemStack(Items.batgene.get()));
+                b.accept(new ItemStack(Items.bloodgene.get()));
+                b.accept(new ItemStack(Items.flygene.get()));
+                b.accept(new ItemStack(Items.heathgene.get()));
+                b.accept(new ItemStack(Items.ragegene.get()));
+                b.accept(new ItemStack(Items.sleepgene.get()));
+
+
+                b.accept(new ItemStack(Items.apple.get()));
+                b.accept(new ItemStack(Items.medicinebox.get()));
+
+
+                b.accept(new ItemStack(Items.calcification.get()));
+                b.accept(new ItemStack(Items.masticatory.get()));
+                b.accept(new ItemStack(Items.polyphagia.get()));
+                b.accept(new ItemStack(Items.quadriceps.get()));
+                b.accept(new ItemStack(Items.reanimation.get()));
+
+
+                b.accept(new ItemStack(Items.ambush.get()));
+                b.accept(new ItemStack(Items.atpoverdose.get()));
+                b.accept(new ItemStack(Items.autolytic.get()));
+                b.accept(new ItemStack(Items.fermentation.get()));
+                b.accept(new ItemStack(Items.putrefactive.get()));
+                b.accept(new ItemStack(Items.regenerative.get()));
+                b.accept(new ItemStack(Items.bat_cell.get()));
+                b.accept(new ItemStack(Items.cell_blood_attack.get()));
+                b.accept(new ItemStack(Items.cell_desecrate.get()));
+                b.accept(new ItemStack(Items.cell_doctor.get()));
+                b.accept(new ItemStack(Items.cell_fear.get()));
+                b.accept(new ItemStack(Items.cell_harvest.get()));
+                b.accept(new ItemStack(Items.cell_immortal.get()));
+                b.accept(new ItemStack(Items.cell_not_do.get()));
+                b.accept(new ItemStack(Items.cell_rage.get()));
+                b.accept(new ItemStack(Items.cell_scientist.get()));
+
+
+                b.accept(new ItemStack(Items.bloodvirus.get()));
+                b.accept(new ItemStack(Items.necora.get()));
+
+
+            })
+            .build()
+    );
     public static final DeferredHolder<CreativeModeTab,?> ITEM = TABS.register("moonstone_item",()-> CreativeModeTab.builder()
             .icon(()->new ItemStack(Items.ectoplasmball.get()))
             .title(Component.translatable("itemGroup.tabmoonstone"))
@@ -93,69 +165,6 @@ public class Tab {
                 b.accept(new ItemStack(Items.wind.get()));
                 b.accept(new ItemStack(Items.wind_and_rain.get()));
 
-                b.accept(new ItemStack(Items.dna.get()));
-                b.accept(new ItemStack(Items.fungus.get()));
-                b.accept(new ItemStack(Items.germ.get()));
-                b.accept(new ItemStack(Items.parasite.get()));
-                b.accept(new ItemStack(Items.virus.get()));
-                b.accept(new ItemStack(Items.cell.get()));
-                b.accept(new ItemStack(Items.adrenaline.get()));
-                b.accept(new ItemStack(Items.cell_mummy.get()));
-                b.accept(new ItemStack(Items.cell_boom.get()));
-                b.accept(new ItemStack(Items.cell_calcification.get()));
-                b.accept(new ItemStack(Items.cell_blood.get()));
-                b.accept(new ItemStack(Items.air.get()));
-                b.accept(new ItemStack(Items.motor.get()));
-                b.accept(new ItemStack(Items.watergen.get()));
-                b.accept(new ItemStack(Items.giant.get()));
-                b.accept(new ItemStack(Items.giant_nightmare.get()));
-
-                b.accept(new ItemStack(Items.botton.get()));
-                b.accept(new ItemStack(Items.catalyzer.get()));
-
-
-                b.accept(new ItemStack(Items.batskill.get()));
-
-
-                b.accept(new ItemStack(Items.batgene.get()));
-                b.accept(new ItemStack(Items.bloodgene.get()));
-                b.accept(new ItemStack(Items.flygene.get()));
-                b.accept(new ItemStack(Items.heathgene.get()));
-                b.accept(new ItemStack(Items.ragegene.get()));
-                b.accept(new ItemStack(Items.sleepgene.get()));
-
-
-                b.accept(new ItemStack(Items.apple.get()));
-                b.accept(new ItemStack(Items.medicinebox.get()));
-
-
-                b.accept(new ItemStack(Items.calcification.get()));
-                b.accept(new ItemStack(Items.masticatory.get()));
-                b.accept(new ItemStack(Items.polyphagia.get()));
-                b.accept(new ItemStack(Items.quadriceps.get()));
-                b.accept(new ItemStack(Items.reanimation.get()));
-
-
-                b.accept(new ItemStack(Items.ambush.get()));
-                b.accept(new ItemStack(Items.atpoverdose.get()));
-                b.accept(new ItemStack(Items.autolytic.get()));
-                b.accept(new ItemStack(Items.fermentation.get()));
-                b.accept(new ItemStack(Items.putrefactive.get()));
-                b.accept(new ItemStack(Items.regenerative.get()));
-                b.accept(new ItemStack(Items.bat_cell.get()));
-                b.accept(new ItemStack(Items.cell_blood_attack.get()));
-                b.accept(new ItemStack(Items.cell_desecrate.get()));
-                b.accept(new ItemStack(Items.cell_doctor.get()));
-                b.accept(new ItemStack(Items.cell_fear.get()));
-                b.accept(new ItemStack(Items.cell_harvest.get()));
-                b.accept(new ItemStack(Items.cell_immortal.get()));
-                b.accept(new ItemStack(Items.cell_not_do.get()));
-                b.accept(new ItemStack(Items.cell_rage.get()));
-                b.accept(new ItemStack(Items.cell_scientist.get()));
-
-
-                b.accept(new ItemStack(Items.bloodvirus.get()));
-                b.accept(new ItemStack(Items.necora.get()));
 
             })
             .build());

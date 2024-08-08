@@ -44,7 +44,6 @@ public class nightmare_entity extends cell_zombie {
             this.level().explode(this,this.getX(),this.getY()+1,this.getZ(),1, Level.ExplosionInteraction.NONE);
             this.discard();
         }else {
-
             if (this.time < 280) {
                 if (this.time % 130 == 0) {
                 }

@@ -184,7 +184,7 @@ public class AllEvent {
                 if (!Handler.hascurio(player,Items.giant_nightmare.get())) {
                     if (!player.getCooldowns().isOnCooldown(Items.giant.get())) {
                         if (player.level() instanceof ServerLevel p_222881_) {
-                            if (Mth.nextInt(RandomSource.create(), 1, 10) == 1) {
+                            if (Mth.nextInt(RandomSource.create(), 1, 5) == 1) {
                                 Handler.trySpawnMob(player, EntityTs.cell_giant.get(), MobSpawnType.TRIGGERED, p_222881_, new BlockPos((int) event.getEntity().getX(), (int) event.getEntity().getY(), (int) event.getEntity().getZ()), 10, 2, 3, SpawnUtil.Strategy.ON_TOP_OF_COLLIDER);
                                 player.level().playSound(null, player.blockPosition(), SoundEvents.WARDEN_EMERGE, SoundSource.NEUTRAL, 1.0F, 1.0F);
                                 player.getCooldowns().addCooldown(Items.giant.get(), 600);
@@ -986,7 +986,7 @@ public class AllEvent {
                     if (event.getSource().getEntity() instanceof LivingEntity living) {
                         if (!(living instanceof Guardian)) {
                             if (event.getSource().getEntity() != null) {
-                                living.hurt(living.damageSources().playerAttack(player), event.getAmount() / 5);
+                                living.hurt(living.damageSources().magic(), event.getAmount() / 5);
                                 player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.THORNS_HIT, SoundSource.NEUTRAL, 1F, 1F);
 
                             }

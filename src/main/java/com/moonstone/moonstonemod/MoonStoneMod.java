@@ -10,7 +10,7 @@ import com.moonstone.moonstonemod.client.renderer.MRender;
 import com.moonstone.moonstonemod.entity.client.CellZombieG;
 import com.moonstone.moonstonemod.entity.client.SwordRenderer;
 import com.moonstone.moonstonemod.entity.client.ZombieRenderer;
-import com.moonstone.moonstonemod.entity.nightmare.CellZombieN;
+import com.moonstone.moonstonemod.entity.client.CellZombieN;
 import com.moonstone.moonstonemod.event.*;
 import com.moonstone.moonstonemod.init.*;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -26,8 +26,6 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 
 import java.io.IOException;

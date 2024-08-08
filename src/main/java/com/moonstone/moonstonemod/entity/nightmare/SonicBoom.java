@@ -73,12 +73,7 @@ public class SonicBoom extends Behavior<nightmare_giant> {
                         p_217724_.addFreshEntity(z);
 
                     }
-                    if (p_217725_.getOwner() != null) {
-                        if (p_217725_.getOwner().getHealth() > 10) {
-                            p_217725_.getOwner().hurt(p_217725_.getOwner().damageSources().dryOut(), p_217725_.getOwner().getHealth() / 20);
-                            p_217725_.getOwner().invulnerableTime = 0;
-                        }
-                    }
+
 
                     p_217725_.playSound(SoundEvents.GENERIC_EXPLODE.value(), 1.0F, 1.0F);
                     p_217704_.hurt(p_217724_.damageSources().sonicBoom(p_217725_), 20);

@@ -5,7 +5,8 @@
   "moonstone.book.error": "你需要安装帕秋莉手册",
   "curios.modifiers.necora": "佩戴时",
   "itemGroup.tabmoonstone": "月之石",
-  "itemGroup.tabmoonstone.necora": "月之石:基因",
+
+  "itemGroup.tabmoonstone.dna": "月之石:基因",
 
   "moonstone.attribute.name.ectoplasm": "灵质",
   "moonstone.attribute.name.mysterious": "神秘",

@@ -23,12 +23,7 @@ public class CellZombieG  extends MobRenderer<cell_giant, GModel<cell_giant>> {
         this.addLayer(new GEmissiveLay<>(this, PULSATING_SPOTS_TEXTURE_2, (p_234801_, p_234802_, p_234803_) -> {
             return Math.max(0.0F, Mth.cos(p_234803_ * 0.045F + (float)Math.PI) * 0.25F);
         }, GModel::getPulsatingSpotsLayerModelParts));
-        this.addLayer(new GEmissiveLay<>(this, TEXTURE, (p_234797_, p_234798_, p_234799_) -> {
-            return p_234797_.getTendrilAnimation(p_234798_);
-        }, GModel::getTendrilsLayerModelParts));
-        this.addLayer(new GEmissiveLay<>(this, HEART_TEXTURE, (p_234793_, p_234794_, p_234795_) -> {
-            return p_234793_.getHeartAnimation(p_234794_);
-        }, GModel::getHeartLayerModelParts));
+
     }
 
     public ResourceLocation getTextureLocation(cell_giant p_234791_) {

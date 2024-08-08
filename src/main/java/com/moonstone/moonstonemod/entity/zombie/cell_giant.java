@@ -4,6 +4,9 @@ import com.google.common.annotations.VisibleForTesting;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Dynamic;
 import com.moonstone.moonstonemod.entity.ai.AIgiant;
+import com.moonstone.moonstonemod.entity.nightmare.AInightmare;
+import com.moonstone.moonstonemod.entity.nightmare.SonicBoom;
+import com.moonstone.moonstonemod.entity.nightmare.nightmare_giant;
 import com.moonstone.moonstonemod.init.EntityTs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -11,14 +14,19 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.DebugPackets;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.GameEventTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Unit;
@@ -27,7 +35,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.behavior.warden.SonicBoom;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -46,6 +53,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.PositionSource;
@@ -60,11 +68,15 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 public class cell_giant extends TamableAnimal implements OwnableEntity {
+
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<Integer> CLIENT_ANGER_LEVEL = SynchedEntityData.defineId(cell_giant.class, EntityDataSerializers.INT);
+
     private int tendrilAnimation;
     private int tendrilAnimationO;
     private int heartAnimation;
@@ -75,12 +87,11 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
     public AnimationState diggingAnimationState = new AnimationState();
     public AnimationState attackAnimationState = new AnimationState();
     public AnimationState sonicBoomAnimationState = new AnimationState();
-
-    private final VibrationSystem.User vibrationUser;
     private VibrationSystem.Data vibrationData;
-    public cell_giant(EntityType<? extends cell_giant> c  , Level p_34272_) {
-        super(c, p_34272_);
-        this.vibrationUser = new VibrationUser();
+    AngerManagement angerManagement = new AngerManagement(this::canTargetEntity, Collections.emptyList());
+
+    public cell_giant(EntityType<? extends cell_giant> p_219350_, Level p_219351_) {
+        super(p_219350_, p_219351_);
         this.vibrationData = new VibrationSystem.Data();
         this.xpReward = 5;
         this.getNavigation().setCanFloat(true);
@@ -91,60 +102,20 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
         this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
     }
-
-    public int time = 0;
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 450).add(Attributes.MOVEMENT_SPEED, 0.2).add(Attributes.KNOCKBACK_RESISTANCE, 1.0D).add(Attributes.ATTACK_KNOCKBACK, 1.5D).add(Attributes.ATTACK_DAMAGE, 22);
-    }
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
-        cell_giant wolf = EntityTs.cell_giant.get().create(p_146743_);
-        if (wolf != null) {
-            UUID uuid = this.getOwnerUUID();
-            if (uuid != null) {
-                wolf.setOwnerUUID(uuid);
-                wolf.setTame(true,true);
-            }
-        }
-        return wolf;
-    }
-
-
-    @Override
-    public void die(@NotNull DamageSource p_21809_) {
-
-    }
-
-    @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
     public LivingEntity getOwner() {
         return super.getOwner();
     }
 
     @Override
-    public void setOwnerUUID(@Nullable UUID p_21817_) {
-        super.setOwnerUUID(p_21817_);
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity p_352154_) {
+        return new ClientboundAddEntityPacket(this, p_352154_, this.hasPose(Pose.EMERGING) ? 1 : 0);
     }
-    public void aiStep() {
-        super.aiStep();
-    }
-    public boolean wantsToAttack(LivingEntity p_30389_, LivingEntity p_30390_) {
-        if (!(p_30389_ instanceof Creeper) && !(p_30389_ instanceof Ghast)) {
-            if (p_30389_ instanceof cell_zombie) {
-                cell_zombie wolf = (cell_zombie)p_30389_;
-                return !wolf.isTame() || wolf.getOwner() != p_30390_;
-            } else if (p_30389_ instanceof Player && p_30390_ instanceof Player && !((Player)p_30390_).canHarmPlayer((Player)p_30389_)) {
-                return false;
-            } else if (p_30389_ instanceof AbstractHorse && ((AbstractHorse)p_30389_).isTamed()) {
-                return false;
-            } else {
-                return !(p_30389_ instanceof TamableAnimal) || !((TamableAnimal)p_30389_).isTame();
-            }
-        } else {
-            return false;
-        }
+
+    @Override
+    public void die(DamageSource p_21809_) {
+
     }
 
     @Override
@@ -163,22 +134,8 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
         this.targetSelector.addGoal(6, new NonTameRandomTargetGoal<>(this, Turtle.class, false, Turtle.BABY_ON_LAND_SELECTOR));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Villager.class, false));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Zombie.class, false));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Spider.class, false));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Skeleton.class, false));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Creeper.class, false));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, EnderMan.class, false));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Monster.class, false));
 
     }
-    public float getHeartAnimation(float p_219470_) {
-        return Mth.lerp(p_219470_, (float)this.heartAnimationO, (float)this.heartAnimation) / 10.0F;
-    }
-    public float getTendrilAnimation(float p_219468_) {
-        return Mth.lerp(p_219468_, (float)this.tendrilAnimationO, (float)this.tendrilAnimation) / 10.0F;
-    }
-
     public void recreateFromPacket(ClientboundAddEntityPacket p_219420_) {
         super.recreateFromPacket(p_219420_);
         if (p_219420_.getData() == 1) {
@@ -209,7 +166,11 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
     }
 
     protected float nextStep() {
-        return this.moveDist + 1.5f;
+        return this.moveDist + 0.55F;
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 500.0D).add(Attributes.MOVEMENT_SPEED, (double)0.3F).add(Attributes.KNOCKBACK_RESISTANCE, 1.0D).add(Attributes.ATTACK_KNOCKBACK, 1.5D).add(Attributes.ATTACK_DAMAGE, 30.0D);
     }
 
     public boolean dampensVibrations() {
@@ -234,14 +195,19 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
     }
 
     protected void playStepSound(BlockPos p_219431_, BlockState p_219432_) {
-        this.playSound(SoundEvents.ZOGLIN_STEP, 1.0f, 1.0F);
+        this.playSound(SoundEvents.ZOMBIE_STEP, 10.0F, 1.0F);
     }
 
     public boolean doHurtTarget(Entity p_219472_) {
         this.level().broadcastEntityEvent(this, (byte)4);
-        this.playSound(SoundEvents.PANDA_EAT, 10.0F, this.getVoicePitch());
-        SonicBoom.setCooldown(this, 40);
+        com.moonstone.moonstonemod.entity.nightmare.SonicBoom.setCooldown(this, 40);
         return super.doHurtTarget(p_219472_);
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(CLIENT_ANGER_LEVEL, 0);
     }
 
     public int getClientAngerLevel() {
@@ -252,19 +218,36 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         this.entityData.set(CLIENT_ANGER_LEVEL, this.getActiveAnger());
     }
 
-    private void sou() {
-        this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.WARDEN_HEARTBEAT, this.getSoundSource(), 5.0F, this.getVoicePitch(), false);
-    }
+    public int time = 0;
+
     public void tick() {
         time++;
-        if (this.time > 1200){
-            this.kill();
+        if (time > 1200){
+            this.discard();
+        }
+        if (this.getOwner()!= null) {
+            if (this.getOwner().getLastHurtByMob()!= null) {
+                if (!this.getOwner().getLastHurtByMob().is(this)) {
+                    this.setAttackTarget(this.getOwner().getLastHurtByMob());
+                }
+            }
+            if (this.getOwner().getLastAttacker()!= null) {
+                if (!this.getOwner().getLastAttacker().is(this)) {
+                    this.setAttackTarget(this.getOwner().getLastAttacker());
+                }
+
+            }
+            if (this.getOwner().getLastHurtMob()!= null) {
+                if (!this.getOwner().getLastHurtMob().is(this)) {
+                    this.setAttackTarget(this.getOwner().getLastHurtMob());
+                }
+
+            }
         }
         Level level = this.level();
         if (level instanceof ServerLevel serverlevel) {
-            VibrationSystem.Ticker.tick(serverlevel, this.vibrationData, this.vibrationUser);
             if (this.isPersistenceRequired() || this.requiresCustomPersistence()) {
-                WardenAi.setDigCooldown(this);
+                AInightmare.setDigCooldown(this);
             }
         }
 
@@ -272,9 +255,7 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         if (this.level().isClientSide()) {
             if (this.tickCount % this.getHeartBeatDelay() == 0) {
                 this.heartAnimation = 10;
-                if (!this.isSilent()) {
-                    sou();
-                }
+
             }
 
             this.tendrilAnimationO = this.tendrilAnimation;
@@ -299,11 +280,12 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
     }
 
     protected void customServerAiStep() {
-        ServerLevel serverlevel = (ServerLevel) this.level();
-        serverlevel.getProfiler().push("rain");
+        ServerLevel serverlevel = (ServerLevel)this.level();
+        serverlevel.getProfiler().push("nightmare_giantBrain");
         this.getBrain().tick(serverlevel, this);
         this.level().getProfiler().pop();
         super.customServerAiStep();
+
         if (this.tickCount % 20 == 0) {
             this.angerManagement.tick(serverlevel, this::canTargetEntity);
             this.syncClientAngerLevel();
@@ -325,10 +307,17 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
     }
 
     private int getHeartBeatDelay() {
-        float f = (float)this.getClientAngerLevel() / (float) AngerLevel.ANGRY.getMinimumAnger();
+        float f = (float)this.getClientAngerLevel() / (float)AngerLevel.ANGRY.getMinimumAnger();
         return 40 - Mth.floor(Mth.clamp(f, 0.0F, 1.0F) * 30.0F);
     }
 
+    public float getTendrilAnimation(float p_219468_) {
+        return Mth.lerp(p_219468_, (float)this.tendrilAnimationO, (float)this.tendrilAnimation) / 10.0F;
+    }
+
+    public float getHeartAnimation(float p_219470_) {
+        return Mth.lerp(p_219470_, (float)this.heartAnimationO, (float)this.heartAnimation) / 10.0F;
+    }
 
     private void clientDiggingParticles(AnimationState p_219384_) {
         if ((float)p_219384_.getAccumulatedTime() < 4500.0F) {
@@ -370,13 +359,12 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         return this.isDiggingOrEmerging();
     }
 
-    public @NotNull Brain<cell_giant> getBrain() {
-        return (Brain<cell_giant>)super.getBrain();
+    protected Brain<?> makeBrain(Dynamic<?> p_219406_) {
+        return AIgiant.makeBrain(this, p_219406_);
     }
 
-    @Override
-    protected @NotNull Brain<?> makeBrain(Dynamic<?> p_21069_) {
-        return AIgiant.makeBrain(this,p_21069_);
+    public Brain<cell_giant> getBrain() {
+        return (Brain<cell_giant>)super.getBrain();
     }
 
     protected void sendDebugPackets() {
@@ -384,17 +372,21 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         DebugPackets.sendEntityBrain(this);
     }
 
+
     @Contract("null->false")
     public boolean canTargetEntity(@javax.annotation.Nullable Entity p_219386_) {
         if (p_219386_ instanceof LivingEntity livingentity) {
-            if (this.level() == p_219386_.level() && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(p_219386_) && !this.isAlliedTo(p_219386_) && livingentity.getType() != EntityType.ARMOR_STAND&& !livingentity.isInvulnerable() && !livingentity.isDeadOrDying() && this.level().getWorldBorder().isWithinBounds(livingentity.getBoundingBox())) {
-                return true;
+            if (this.getOwner()!= null) {
+                if (!livingentity.is(this.getOwner())) {
+                    if (this.level() == p_219386_.level() && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(p_219386_) && !this.isAlliedTo(p_219386_) && livingentity.getType() != EntityType.ARMOR_STAND && livingentity.getType() != EntityTs.nightmare_giant.get() && !livingentity.isInvulnerable() && !livingentity.isDeadOrDying() && this.level().getWorldBorder().isWithinBounds(livingentity.getBoundingBox())) {
+                        return true;
+                    }
+                }
             }
         }
 
         return false;
     }
-
 
 
     public void addAdditionalSaveData(CompoundTag p_219434_) {
@@ -434,13 +426,42 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
     public AngerLevel getAngerLevel() {
         return AngerLevel.byAnger(this.getActiveAnger());
     }
-    AngerManagement angerManagement = new AngerManagement(this::canTargetEntity, Collections.emptyList());
 
     private int getActiveAnger() {
         return this.angerManagement.getActiveAnger(this.getTarget());
     }
 
+    public void clearAnger(Entity p_219429_) {
+        this.angerManagement.clearAnger(p_219429_);
+    }
 
+    public void increaseAngerAt(@javax.annotation.Nullable Entity p_219442_) {
+        this.increaseAngerAt(p_219442_, 35, true);
+    }
+    @VisibleForTesting
+    public void increaseAngerAt(@javax.annotation.Nullable Entity p_219388_, int p_219389_, boolean p_219390_) {
+        if (!this.isNoAi() && this.canTargetEntity(p_219388_)) {
+            AInightmare.setDigCooldown(this);
+            boolean flag = !(this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null) instanceof Player);
+            int i = this.angerManagement.increaseAnger(p_219388_, p_219389_);
+            if (p_219388_ instanceof Player && flag && AngerLevel.byAnger(i).isAngry()) {
+                this.getBrain().eraseMemory(MemoryModuleType.ATTACK_TARGET);
+            }
+
+            if (p_219390_) {
+                this.playListeningSound();
+            }
+        }
+
+    }
+    public Optional<LivingEntity> getEntityAngryAt() {
+        return this.getAngerLevel().isAngry() ? this.angerManagement.getActiveEntity() : Optional.empty();
+    }
+
+    @javax.annotation.Nullable
+    public LivingEntity getTarget() {
+        return this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse((LivingEntity)null);
+    }
 
     public boolean removeWhenFarAway(double p_219457_) {
         return false;
@@ -451,12 +472,36 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         return false;
     }
 
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+        nightmare_giant wolf = EntityTs.nightmare_giant.get().create(p_146743_);
+        if (wolf != null) {
+            UUID uuid = this.getOwnerUUID();
+            if (uuid != null) {
+                wolf.setOwnerUUID(uuid);
+
+            }
+        }
+        return wolf;
+    }
+
     public boolean hurt(DamageSource p_219381_, float p_219382_) {
         boolean flag = super.hurt(p_219381_, p_219382_);
-        Entity entity = p_219381_.getEntity();
-        if (entity instanceof LivingEntity living){
-            this.setAttackTarget(living);
+        if (!this.level().isClientSide && !this.isNoAi() && !this.isDiggingOrEmerging()) {
+            Entity entity = p_219381_.getEntity();
+            this.increaseAngerAt(entity, AngerLevel.ANGRY.getMinimumAnger() + 20, false);
+            if (this.brain.getMemory(MemoryModuleType.ATTACK_TARGET).isEmpty() && entity instanceof LivingEntity) {
+                LivingEntity livingentity = (LivingEntity)entity;
+                if (!p_219381_.isDirect() || this.closerThan(livingentity, 5.0D)) {
+
+                    if (this.getOwner()!= null &&!livingentity.is(this.getOwner())) {
+                        this.setAttackTarget(livingentity);
+                    }
+                }
+            }
         }
+
         return flag;
     }
 
@@ -464,15 +509,9 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         this.getBrain().eraseMemory(MemoryModuleType.ROAR_TARGET);
         this.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, p_219460_);
         this.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
-        SonicBoom.setCooldown(this, 200);
+        SonicBoom.setCooldown(this, 20);
     }
 
-    @Override
-    protected EntityDimensions getDefaultDimensions(Pose p_219392_) {
-        EntityDimensions entitydimensions = super.getDimensions(p_219392_);
-        return this.isDiggingOrEmerging() ? EntityDimensions.fixed(entitydimensions.width(), 1.0F) : entitydimensions;
-
-    }
 
 
     public boolean isPushable() {
@@ -482,6 +521,7 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
     protected void doPush(Entity p_219353_) {
         if (!this.isNoAi() && !this.getBrain().hasMemoryValue(MemoryModuleType.TOUCH_COOLDOWN)) {
             this.getBrain().setMemoryWithExpiry(MemoryModuleType.TOUCH_COOLDOWN, Unit.INSTANCE, 20L);
+            this.increaseAngerAt(p_219353_);
         }
 
         super.doPush(p_219353_);
@@ -506,96 +546,4 @@ public class cell_giant extends TamableAnimal implements OwnableEntity {
         };
     }
 
-    public VibrationSystem.Data getVibrationData() {
-        return this.vibrationData;
-    }
-
-    public VibrationSystem.User getVibrationUser() {
-        return this.vibrationUser;
-    }
-
-    public void increaseAngerAt(@javax.annotation.Nullable Entity p_219442_) {
-        this.increaseAngerAt(p_219442_, 35, true);
-    }
-
-    @VisibleForTesting
-    public void increaseAngerAt(@javax.annotation.Nullable Entity p_219388_, int p_219389_, boolean p_219390_) {
-        if (!this.isNoAi() && this.canTargetEntity(p_219388_)) {
-            WardenAi.setDigCooldown(this);
-            boolean flag = !(this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse((LivingEntity)null) instanceof Player);
-            int i = this.angerManagement.increaseAnger(p_219388_, p_219389_);
-            if (p_219388_ instanceof Player && flag && AngerLevel.byAnger(i).isAngry()) {
-                if (this.getOwner()!= null &&!this.getOwner().is(p_219388_)) {
-                    this.getBrain().eraseMemory(MemoryModuleType.ATTACK_TARGET);
-                }
-            }
-            if (p_219390_) {
-                this.playListeningSound();
-            }
-        }
-
-    }
-
-    public class VibrationUser implements VibrationSystem.User {
-        private static final int GAME_EVENT_LISTENER_RANGE = 16;
-        private final PositionSource positionSource = new EntityPositionSource(cell_giant.this, cell_giant.this.getEyeHeight());
-
-        public int getListenerRadius() {
-            return 16;
-        }
-
-        public PositionSource getPositionSource() {
-            return this.positionSource;
-        }
-
-        @Override
-        public boolean canReceiveVibration(ServerLevel p_282574_, BlockPos p_282323_, Holder<GameEvent> p_316784_, GameEvent.Context p_282515_) {
-            if (!cell_giant.this.isNoAi()
-                    && !cell_giant.this.isDeadOrDying()
-                    && !cell_giant.this.getBrain().hasMemoryValue(MemoryModuleType.VIBRATION_COOLDOWN)
-                    && !cell_giant.this.isDiggingOrEmerging()
-                    && p_282574_.getWorldBorder().isWithinBounds(p_282323_)) {
-                if (p_282515_.sourceEntity() instanceof LivingEntity livingentity && !cell_giant.this.canTargetEntity(livingentity)) {
-                    return false;
-                }
-
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public void onReceiveVibration(
-                ServerLevel p_281325_, BlockPos p_282386_, Holder<GameEvent> p_316139_, @javax.annotation.Nullable Entity p_281438_, @javax.annotation.Nullable Entity p_282582_, float p_283699_
-        ) {
-            if (!cell_giant.this.isDeadOrDying()) {
-                cell_giant.this.brain.setMemoryWithExpiry(MemoryModuleType.VIBRATION_COOLDOWN, Unit.INSTANCE, 40L);
-                p_281325_.broadcastEntityEvent(cell_giant.this, (byte)61);
-                cell_giant.this.playSound(SoundEvents.WARDEN_TENDRIL_CLICKS, 5.0F, cell_giant.this.getVoicePitch());
-                BlockPos blockpos = p_282386_;
-                if (p_282582_ != null) {
-                    if (cell_giant.this.closerThan(p_282582_, 30.0)) {
-                        if (cell_giant.this.getBrain().hasMemoryValue(MemoryModuleType.RECENT_PROJECTILE)) {
-                            if (cell_giant.this.canTargetEntity(p_282582_)) {
-                                blockpos = p_282582_.blockPosition();
-                            }
-
-                            cell_giant.this.increaseAngerAt(p_282582_);
-                        } else {
-                            cell_giant.this.increaseAngerAt(p_282582_, 10, true);
-                        }
-                    }
-
-                    cell_giant.this.getBrain().setMemoryWithExpiry(MemoryModuleType.RECENT_PROJECTILE, Unit.INSTANCE, 100L);
-                } else {
-                    cell_giant.this.increaseAngerAt(p_281438_);
-                }
-            }
-        }
-        public boolean canTriggerAvoidVibration() {
-            return true;
-        }
-
-    }
 }

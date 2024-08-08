@@ -1,5 +1,7 @@
 package com.moonstone.moonstonemod;
 
+import com.moonstone.moonstonemod.entity.nightmare.nightmare_giant;
+import com.moonstone.moonstonemod.entity.zombie.cell_giant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentType;
@@ -19,38 +21,6 @@ import top.theillusivec4.curios.api.SlotResult;
 import java.util.List;
 
 public class Handler {
-
-    public static void set(ItemStack getItem,
-                                 DeferredHolder<DataComponentType<?>, DataComponentType<String>> dataComponentType,
-                                 String set){
-        getItem.set(dataComponentType,set);
-    }
-    public static boolean getNotNullString(ItemStack getItem,
-                                     DeferredHolder<DataComponentType<?>, DataComponentType<String>> dataComponentType){
-        return getItem.get(dataComponentType) != null;
-    }
-
-
-    public static void set(ItemStack getItem,
-                                 DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> dataComponentType,
-                                 Integer set){
-        getItem.set(dataComponentType,set);
-    }
-    public static boolean getNotNullInteger(ItemStack getItem,
-                                     DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> dataComponentType){
-        return getItem.get(dataComponentType) != null;
-    }
-    public static Integer getInteger(ItemStack getItem,
-                                            DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> dataComponentType)
-    {
-        return getItem.get(dataComponentType);
-    }
-
-
-
-
-
-
 
     public static <T extends TamableAnimal> void trySpawnMob(
             Player player,
@@ -73,6 +43,15 @@ public class Handler {
                     && moveToPossibleSpawnPosition(pLevel, pYOffset, blockpos$mutableblockpos, pStrategy)) {
                 T t = (T)pEntityType.create(pLevel, null, blockpos$mutableblockpos, pSpawnType, false, false);
                 if (t != null) {
+
+                    if (t instanceof nightmare_giant nightmareGiant){
+                        nightmareGiant.setPose(Pose.EMERGING);
+                    }
+
+                    if (t instanceof cell_giant nightmareGiant){
+                        nightmareGiant.setPose(Pose.EMERGING);
+                    }
+
                     t.setOwnerUUID(player.getUUID());
                     if (net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(t, pLevel, pSpawnType)) {
                         pLevel.addFreshEntityWithPassengers(t);
