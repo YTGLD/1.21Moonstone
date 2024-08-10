@@ -46,6 +46,8 @@ public class StrengtheningLayer<T extends LivingEntity, M extends EntityModel<T>
 
         new orb(matrices, vertexConsumers, light, entity);
 
+        new Sword(matrices, vertexConsumers, light, entity);
+
         if (entity instanceof test_blood){
             matrices.scale(0.33f,0.33f,0.33f);
             new CircleCubeBoom(matrices, vertexConsumers, light, entity);

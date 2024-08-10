@@ -13,6 +13,7 @@ import com.moonstone.moonstonemod.item.ectoplasm.soul.soulbattery;
 import com.moonstone.moonstonemod.item.ectoplasm.soul.soulcube;
 import com.moonstone.moonstonemod.item.maulice.*;
 import com.moonstone.moonstonemod.item.maxitem.fortunecrystal;
+import com.moonstone.moonstonemod.item.maxitem.max_sword;
 import com.moonstone.moonstonemod.item.maxitem.maxamout;
 import com.moonstone.moonstonemod.item.maxitem.mayhemcrystal;
 import com.moonstone.moonstonemod.item.maxitem.uncommon.common.*;
@@ -26,6 +27,7 @@ import com.moonstone.moonstonemod.item.necora;
 import com.moonstone.moonstonemod.moonstoneitem.extend.apple;
 import com.moonstone.moonstonemod.moonstoneitem.extend.medicinebox;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -182,6 +184,7 @@ public class Items {
     public static final DeferredHolder<Item,?> cell_fear =REGISTRY.register("cell_fear", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_fear::new);
     public static final DeferredHolder<Item,?> cell_not_do =REGISTRY.register("cell_not_do", com.moonstone.moonstonemod.item.BloodVirus.dna.cell_not_do::new);
 
+    public static final DeferredHolder<Item,?> max_sword =REGISTRY.register("max_sword", (ResourceLocation pProperties) -> new max_sword());
 
 
 

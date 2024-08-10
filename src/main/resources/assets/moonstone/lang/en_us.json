@@ -776,9 +776,18 @@
   "item.pain_ring.tool.string.1": "Until it returns to full health status",
   "item.pain_ring.tool.string.2": "-50% heal",
 
+  "item.moonstone.max_sword": "max sword",
+  "effect.moonstone.rage": "rage",
+  "effect.moonstone.fear": "fear",
+  "effect.moonstone.pain": "pain",
+  "effect.moonstone.blood": "blood",
 
 
-
+  "item.max_sword.tool.string": "Each attack has a probability of generating a blood cell to rotate around you",
+  "item.max_sword.tool.string.1": "When the number of blood cells exceeds 6,",
+  "item.max_sword.tool.string.2": "The next slash will deal triple damage",
+  "item.max_sword.tool.string.3": "Blood cells will be absorbed by you over time",
+  "item.max_sword.tool.string.4": "Each absorption will restore a certain percentage of health",
 
 
   "item.moonstone.tooltip.battery": "Can be retrofitted with Nano",

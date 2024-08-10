@@ -2,7 +2,11 @@ package com.moonstone.moonstonemod.mixin.clilt;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.moonstone.moonstonemod.MoonStoneMod;
+import com.moonstone.moonstonemod.client.MGuiGraphics;
 import com.moonstone.moonstonemod.client.renderer.MRender;
+import com.moonstone.moonstonemod.item.necora;
+import com.moonstone.moonstonemod.item.nightmare.nightmareeye;
 import com.moonstone.moonstonemod.moonstoneitem.Perhaps;
 import com.moonstone.moonstonemod.moonstoneitem.IDoom;
 import com.moonstone.moonstonemod.moonstoneitem.INightmare;
@@ -13,8 +17,11 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.ClientHooks;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import org.joml.Matrix4f;
@@ -39,6 +46,26 @@ public abstract class GuiGraphicsMixin {
     @Shadow public abstract int guiHeight();
 
     @Shadow @Final private PoseStack pose;
+
+    @Inject(at = {@At("RETURN")}, method = {"renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;III)V"})
+    public void ca$renderItemDecorations(LivingEntity p_283524_, Level p_282461_, ItemStack stack, int x, int y, int p_282425_, CallbackInfo ci) {
+        GuiGraphics guiGraphics = (GuiGraphics) (Object) this;
+        if (p_283524_ != null) {
+
+            if (stack.getItem() instanceof necora) {
+                int tickCount = p_283524_.tickCount;
+                float s = (float) Math.sin((double) tickCount / 20);
+                if (s < 0) {
+                    s = 0;
+                }
+                MGuiGraphics.blit(guiGraphics, ResourceLocation.fromNamespaceAndPath(MoonStoneMod.MODID, "textures/necora.png"), x - 8, y - 8, 0, 0, 32, 32, 32, 32, 1, 0, 0, s);
+            }
+        }
+    }
+
+
+
+
     @Unique
     public void moon1_21$drawManaged(Runnable pRunnable) {
         this.flush();

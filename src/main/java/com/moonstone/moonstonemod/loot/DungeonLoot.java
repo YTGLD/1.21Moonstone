@@ -54,45 +54,47 @@ public class DungeonLoot extends LootModifier {
         if (idSting.contains("chests/")) {
             if (idSting.contains("treasure")){
                 if (entity instanceof Player player) {
-                    if (!Handler.hascurio(player,Items.bat_cell.get())) {
-                        generatedLoot.add(new ItemStack(Items.bat_cell.get()));
-                    }
-                    if (Handler.hascurio(player,Items.bat_cell.get())){
-                        if (bat==1){
-                            generatedLoot.add(new ItemStack(Items.cell_blood_attack.get()));
-
+                    if (Handler.hascurio(player,Items.bloodvirus.get())) {
+                        if (!Handler.hascurio(player, Items.bat_cell.get())) {
+                            generatedLoot.add(new ItemStack(Items.bat_cell.get()));
                         }
-                        if (bat==2){
-                            generatedLoot.add(new ItemStack(Items.cell_desecrate.get()));
+                        if (Handler.hascurio(player, Items.bat_cell.get())) {
+                            if (bat == 1) {
+                                generatedLoot.add(new ItemStack(Items.cell_blood_attack.get()));
 
-                        }
-                        if (bat==3){
-                            generatedLoot.add(new ItemStack(Items.cell_doctor.get()));
+                            }
+                            if (bat == 2) {
+                                generatedLoot.add(new ItemStack(Items.cell_desecrate.get()));
 
-                        }
-                        if (bat==4){
-                            generatedLoot.add(new ItemStack(Items.cell_fear.get()));
+                            }
+                            if (bat == 3) {
+                                generatedLoot.add(new ItemStack(Items.cell_doctor.get()));
 
-                        }
-                        if (bat==5){
-                            generatedLoot.add(new ItemStack(Items.cell_harvest.get()));
+                            }
+                            if (bat == 4) {
+                                generatedLoot.add(new ItemStack(Items.cell_fear.get()));
 
-                        }
-                        if (bat==6){
+                            }
+                            if (bat == 5) {
+                                generatedLoot.add(new ItemStack(Items.cell_harvest.get()));
 
-                            generatedLoot.add(new ItemStack(Items.cell_immortal.get()));
-                        }
-                        if (bat==7){
+                            }
+                            if (bat == 6) {
 
-                            generatedLoot.add(new ItemStack(Items.cell_not_do.get()));
-                        }
-                        if (bat==8){
+                                generatedLoot.add(new ItemStack(Items.cell_immortal.get()));
+                            }
+                            if (bat == 7) {
 
-                            generatedLoot.add(new ItemStack(Items.cell_rage.get()));
-                        }
-                        if (bat==9){
+                                generatedLoot.add(new ItemStack(Items.cell_not_do.get()));
+                            }
+                            if (bat == 8) {
 
-                            generatedLoot.add(new ItemStack(Items.cell_scientist.get()));
+                                generatedLoot.add(new ItemStack(Items.cell_rage.get()));
+                            }
+                            if (bat == 9) {
+
+                                generatedLoot.add(new ItemStack(Items.cell_scientist.get()));
+                            }
                         }
                     }
                     if (Handler.hascurio(player, Items.necora.get())){

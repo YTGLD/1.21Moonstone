@@ -45,7 +45,7 @@ public class MoonStoneMod {
         LootReg.REGISTRY.register(eventBus);
         EntityTs.REGISTRY.register(eventBus);
         DataReg.REGISTRY.register(eventBus);
-
+        Effects.REGISTRY.register(eventBus);
         Particles.PARTICLE_TYPES.register(eventBus);
         Items.REGISTRY.register(eventBus);
         Tab.TABS.register(eventBus);

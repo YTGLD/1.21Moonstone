@@ -164,6 +164,7 @@ public class Tab {
                 b.accept(new ItemStack(Items.doomswoud.get()));
                 b.accept(new ItemStack(Items.wind.get()));
                 b.accept(new ItemStack(Items.wind_and_rain.get()));
+                b.accept(new ItemStack(Items.max_sword.get()));
 
 
             })

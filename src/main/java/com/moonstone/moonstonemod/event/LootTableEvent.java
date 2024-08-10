@@ -22,7 +22,7 @@ public class LootTableEvent {
                 table.addPool(LootPool.lootPool().name("ancien_moon")
 
 
-                        .add(LootItem.lootTableItem(Items.ectoplasmball.get()).setWeight(80))
+                        .add(LootItem.lootTableItem(Items.ectoplasmball.get()).setWeight(30))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
 
                         .add(LootItem.lootTableItem(Items.magicstone.get()).setWeight(1))
@@ -61,12 +61,14 @@ public class LootTableEvent {
 
             if (event.getName().toString().contains("treasure")){
                 table.addPool(LootPool.lootPool().name("treasures")
-                        .add(LootItem.lootTableItem(Items.ectoplasmball.get()).setWeight(80))
+                        .add(LootItem.lootTableItem(Items.ectoplasmball.get()).setWeight(20))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
 
                         .add(LootItem.lootTableItem(Items.the_heart.get()).setWeight(1))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
 
+                        .add(LootItem.lootTableItem(Items.maxamout.get()).setWeight(1))
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
 
                         .add(LootItem.lootTableItem(Items.twistedstone.get()).setWeight(1))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
@@ -81,7 +83,7 @@ public class LootTableEvent {
 
             if (event.getName().toString().contains("dungeon") ||event.getName().toString().contains("mineshaft")){
                 table.addPool(LootPool.lootPool().name("dungeon_or_mineshaft")
-                        .add(LootItem.lootTableItem(Items.ectoplasmball.get()).setWeight(80))
+                        .add(LootItem.lootTableItem(Items.ectoplasmball.get()).setWeight(40))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
 
                         .add(LootItem.lootTableItem(Items.badgeofthedead.get()).setWeight(1))

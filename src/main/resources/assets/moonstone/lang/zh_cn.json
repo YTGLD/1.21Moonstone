@@ -824,7 +824,20 @@
   "item.sword_amout.tool.string": "你的攻击速度会随着斩击次数的增加而增加，但不会超过100%",
   "item.sword_amout.tool.string.1": "但是你的伤害会逐渐减少，最多降低到原先的33%",
   "item.sword_amout.tool.string.2": "全力攻击时不会造成无敌帧保护",
-  "item.sword_amout.tool.string.3": "当你的斩击次数到达10时，每次攻击都会造成范围效果"
+  "item.sword_amout.tool.string.3": "当你的斩击次数到达10时，每次攻击都会造成范围效果",
+
+  "effect.moonstone.rage": "狂暴",
+  "effect.moonstone.fear": "恐惧",
+  "effect.moonstone.pain": "痛苦",
+  "effect.moonstone.blood": "血怒",
+
+
+  "item.moonstone.max_sword": "§4诺克萨斯之纹",
+  "item.max_sword.tool.string": "每次攻击都有概率生成一个血球围绕你旋转",
+  "item.max_sword.tool.string.1": "当血球数量超过6时",
+  "item.max_sword.tool.string.2": "下一次斩击将造成3倍伤害",
+  "item.max_sword.tool.string.3": "血球会随着时间的流失而被你吸收",
+  "item.max_sword.tool.string.4": "每次吸收都会恢复一定的百分比生命值"
 }
 
 
