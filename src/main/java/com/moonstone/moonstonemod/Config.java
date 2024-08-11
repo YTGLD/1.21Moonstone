@@ -1,13 +1,9 @@
 package com.moonstone.moonstonemod;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
-
-import java.util.stream.Collectors;
 
 @EventBusSubscriber(modid = MoonStoneMod.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class Config {
@@ -59,6 +55,11 @@ public class Config {
     public static final ModConfigSpec.ConfigValue<String> ZombieNightmareGiantModID = BUILDER
             .comment("What modID with ZombieNightmareGiant Config")
             .define("ModId","minecraft");
+
+    public static final ModConfigSpec.BooleanValue show_blood = BUILDER
+            .comment("If true, display the blood model")
+            .define("ModelByMaxEye",false);
+
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
     }

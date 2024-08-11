@@ -1,4 +1,4 @@
-package com.moonstone.moonstonemod.mixin.clilt;
+package com.moonstone.moonstonemod.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -6,7 +6,6 @@ import com.moonstone.moonstonemod.MoonStoneMod;
 import com.moonstone.moonstonemod.client.MGuiGraphics;
 import com.moonstone.moonstonemod.client.renderer.MRender;
 import com.moonstone.moonstonemod.item.necora;
-import com.moonstone.moonstonemod.item.nightmare.nightmareeye;
 import com.moonstone.moonstonemod.moonstoneitem.Perhaps;
 import com.moonstone.moonstonemod.moonstoneitem.IDoom;
 import com.moonstone.moonstonemod.moonstoneitem.INightmare;

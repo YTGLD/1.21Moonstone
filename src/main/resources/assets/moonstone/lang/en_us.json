@@ -784,10 +784,21 @@
 
 
   "item.max_sword.tool.string": "Each attack has a probability of generating a blood cell to rotate around you",
-  "item.max_sword.tool.string.1": "When the number of blood cells exceeds 6,",
+  "item.max_sword.tool.string.1": "When the number of blood cells exceeds 8,",
   "item.max_sword.tool.string.2": "The next slash will deal triple damage",
   "item.max_sword.tool.string.3": "Blood cells will be absorbed by you over time",
   "item.max_sword.tool.string.4": "Each absorption will restore a certain percentage of health",
+  "item.max_sword.tool.string.5": "Each blood cell provides a 5% damage bonus",
+  "item.max_sword.tool.string.6": "Blood cell explosion causes bleeding effect on organisms within 3 cells",
+  "item.max_sword.tool.string.7": "Kill the creature and obtain 1-3 blood cells",
+
+
+  "item.moonstone.max_eye": "max eye",
+  "item.max_eye.tool.string": "Killing organisms to obtain blood",
+  "item.max_eye.tool.string.1": "Up to 4 points can be stored",
+  "item.max_eye.tool.string.2": "When you have blood, you will reduce damage by 90%",
+  "item.max_eye.tool.string.3": "But every time you get hurt, you lose a drop of blood",
+  "item.max_eye.tool.string.4": "Over time, your health will also be absorbed and restored to 10% of your maximum health",
 
 
   "item.moonstone.tooltip.battery": "Can be retrofitted with Nano",
@@ -799,6 +810,11 @@
   "tool.string.ectoplasmball.3": "",
   "item.nightmare_cube.tool.string": "You can press Shift while approaching the creature and release the dark dye thread",
 
+  "advancements.tooltip.max_eye.hand": "with no chink in one's armour！",
+  "advancements.tooltip.max_eye.text": "The blood eye",
+
+  "advancements.tooltip.max_sword.hand": "Eat me an axe！",
+  "advancements.tooltip.max_sword.text": "Max Sword",
 
   "item.nightmare_head.tool.string": "Immune to all non biological injuries",
   "item.nightmare_head.tool.string.1": "Damage reduction from any source is ineffective and the damage taken is fixed at 1 point, with a maximum health value fixed at 10 points",

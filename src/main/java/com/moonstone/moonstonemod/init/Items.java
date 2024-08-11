@@ -12,10 +12,7 @@ import com.moonstone.moonstonemod.item.ectoplasm.*;
 import com.moonstone.moonstonemod.item.ectoplasm.soul.soulbattery;
 import com.moonstone.moonstonemod.item.ectoplasm.soul.soulcube;
 import com.moonstone.moonstonemod.item.maulice.*;
-import com.moonstone.moonstonemod.item.maxitem.fortunecrystal;
-import com.moonstone.moonstonemod.item.maxitem.max_sword;
-import com.moonstone.moonstonemod.item.maxitem.maxamout;
-import com.moonstone.moonstonemod.item.maxitem.mayhemcrystal;
+import com.moonstone.moonstonemod.item.maxitem.*;
 import com.moonstone.moonstonemod.item.maxitem.uncommon.common.*;
 import com.moonstone.moonstonemod.item.nanodoom.buyme.wind_and_rain;
 import com.moonstone.moonstonemod.item.nanodoom.*;
@@ -186,6 +183,7 @@ public class Items {
 
     public static final DeferredHolder<Item,?> max_sword =REGISTRY.register("max_sword", (ResourceLocation pProperties) -> new max_sword());
 
+    public static final DeferredHolder<Item,?> max_eye =REGISTRY.register("max_eye", (ResourceLocation pProperties) -> new max_eye());
 
 
 

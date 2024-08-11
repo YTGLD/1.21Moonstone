@@ -40,36 +40,60 @@ public class Sword {
                                         if (stack.get(DataReg.tag).getInt(max_sword.MaxSword)>0){
                                             matrices.pushPose();
                                             matrices.mulPose(Axis.YN.rotation((float) living.tickCount/20));
-                                            matrices.translate(0,0.2,0.7);
+                                            matrices.translate(0,0.07,0.7*1.5);
                                             renderSphere1(matrices,vertexConsumers,light,0.17f);
                                             matrices.popPose();
+
                                         }
                                         if (stack.get(DataReg.tag).getInt(max_sword.MaxSword)>1){
                                             matrices.pushPose();
-                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/15));
-                                            matrices.translate(0,0.2,0.6);
-                                            renderSphere1(matrices,vertexConsumers,light,0.15f);
+                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/22));
+                                            matrices.translate(0,0,0.5f*1.5);
+                                            renderSphere1(matrices,vertexConsumers,light,0.14f);
                                             matrices.popPose();
                                         }
                                         if (stack.get(DataReg.tag).getInt(max_sword.MaxSword)>2){
                                             matrices.pushPose();
-                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/12));
-                                            matrices.translate(0,0.2,0.5f);
-                                            renderSphere1(matrices,vertexConsumers,light,0.135f);
+                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/10));
+                                            matrices.translate(0,0.2,0.45*1.5);
+                                            renderSphere1(matrices,vertexConsumers,light,0.1f);
                                             matrices.popPose();
                                         }
                                         if (stack.get(DataReg.tag).getInt(max_sword.MaxSword)>3){
                                             matrices.pushPose();
-                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/10));
-                                            matrices.translate(0,0.2,0.45);
-                                            renderSphere1(matrices,vertexConsumers,light,0.1f);
+                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/21));
+                                            matrices.translate(0,0.22,0.23*1.5);
+                                            renderSphere1(matrices,vertexConsumers,light,0.075f);
                                             matrices.popPose();
                                         }
                                         if (stack.get(DataReg.tag).getInt(max_sword.MaxSword)>4){
                                             matrices.pushPose();
                                             matrices.mulPose(Axis.YN.rotation((float) living.tickCount/8));
-                                            matrices.translate(0,0.2,0.55);
+                                            matrices.translate(0,0.25,0.55*1.5);
                                             renderSphere1(matrices,vertexConsumers,light,0.12f);
+                                            matrices.popPose();
+
+
+                                        }
+                                        if (stack.get(DataReg.tag).getInt(max_sword.MaxSword)>5){
+                                            matrices.pushPose();
+                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/6));
+                                            matrices.translate(0,-0.05,0.58*1.5);
+                                            renderSphere1(matrices,vertexConsumers,light,0.1f);
+                                            matrices.popPose();
+                                        }
+                                        if (stack.get(DataReg.tag).getInt(max_sword.MaxSword)>6){
+                                            matrices.pushPose();
+                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/15));
+                                            matrices.translate(0,0.11,0.6*1.5);
+                                            renderSphere1(matrices,vertexConsumers,light,0.15f);
+                                            matrices.popPose();
+                                        }
+                                        if (stack.get(DataReg.tag).getInt(max_sword.MaxSword)>7){
+                                            matrices.pushPose();
+                                            matrices.mulPose(Axis.YN.rotation((float) living.tickCount/20));
+                                            matrices.translate(0,0.11,0.4*1.5);
+                                            renderSphere1(matrices,vertexConsumers,light,0.22f);
                                             matrices.popPose();
                                         }
                                     }

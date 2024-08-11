@@ -67,7 +67,7 @@ public class LootTableEvent {
                         .add(LootItem.lootTableItem(Items.the_heart.get()).setWeight(1))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
 
-                        .add(LootItem.lootTableItem(Items.maxamout.get()).setWeight(1))
+                        .add(LootItem.lootTableItem(Items.max_eye.get()).setWeight(1))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
 
                         .add(LootItem.lootTableItem(Items.twistedstone.get()).setWeight(1))

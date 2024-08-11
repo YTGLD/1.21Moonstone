@@ -826,16 +826,31 @@
   "item.sword_amout.tool.string.2": "全力攻击时不会造成无敌帧保护",
   "item.sword_amout.tool.string.3": "当你的斩击次数到达10时，每次攻击都会造成范围效果",
 
+  "advancements.tooltip.max_eye.hand": "无懈可击！",
+  "advancements.tooltip.max_eye.text": "获得无懈之眼",
+
+  "advancements.tooltip.max_sword.hand": "吃我一斧！",
+  "advancements.tooltip.max_sword.text": "获得诺克萨斯纹章",
+
   "effect.moonstone.rage": "狂暴",
   "effect.moonstone.fear": "恐惧",
   "effect.moonstone.pain": "痛苦",
-  "effect.moonstone.blood": "血怒",
+  "effect.moonstone.blood": "流血",
 
+  "item.moonstone.max_eye": "§4无懈之眼",
+  "item.max_eye.tool.string": "杀死生物获得血液",
+  "item.max_eye.tool.string.1": "最多储存4点",
+  "item.max_eye.tool.string.2": "当你拥有血液时，你将减少90%受到伤害",
+  "item.max_eye.tool.string.3": "但每次受到伤害你都会减少一滴血液、",
+  "item.max_eye.tool.string.4": "时间推移，血量也会被你吸收并恢复10%最大生命值",
+  "item.max_sword.tool.string.5": "每颗血球提供5%的伤害加成",
+  "item.max_sword.tool.string.6": "血球爆炸时对3格内的生物造成流血效果",
+  "item.max_sword.tool.string.7": "杀死生物后再获得1~3颗血球",
 
-  "item.moonstone.max_sword": "§4诺克萨斯之纹",
+  "item.moonstone.max_sword": "§4诺克萨斯纹章",
   "item.max_sword.tool.string": "每次攻击都有概率生成一个血球围绕你旋转",
-  "item.max_sword.tool.string.1": "当血球数量超过6时",
-  "item.max_sword.tool.string.2": "下一次斩击将造成3倍伤害",
+  "item.max_sword.tool.string.1": "当血球数量超过8时",
+  "item.max_sword.tool.string.2": "下一次斩击将造成4倍伤害",
   "item.max_sword.tool.string.3": "血球会随着时间的流失而被你吸收",
   "item.max_sword.tool.string.4": "每次吸收都会恢复一定的百分比生命值"
 }

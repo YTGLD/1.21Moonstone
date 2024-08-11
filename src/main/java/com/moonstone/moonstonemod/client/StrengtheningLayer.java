@@ -3,6 +3,7 @@ package com.moonstone.moonstonemod.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.moonstone.moonstonemod.Config;
 import com.moonstone.moonstonemod.Handler;
 import com.moonstone.moonstonemod.client.renderer.MRender;
 import com.moonstone.moonstonemod.entity.bloodvruis.test_blood;
@@ -47,6 +48,7 @@ public class StrengtheningLayer<T extends LivingEntity, M extends EntityModel<T>
         new orb(matrices, vertexConsumers, light, entity);
 
         new Sword(matrices, vertexConsumers, light, entity);
+
 
         if (entity instanceof test_blood){
             matrices.scale(0.33f,0.33f,0.33f);
