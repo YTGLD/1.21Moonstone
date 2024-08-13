@@ -74,6 +74,7 @@ public class MoonStoneMod {
             event.registerEntityRenderer(EntityTs.test_e.get(), com.moonstone.moonstonemod.entity.client.red.ZombieRenderer::new);
             event.registerEntityRenderer(EntityTs.blood_bat.get(), BloodBatRenderer::new);
             event.registerEntityRenderer(EntityTs.test_blood.get(), com.moonstone.moonstonemod.entity.client.red.ZombieRenderer::new);
+            event.registerEntityRenderer(EntityTs.blood_zombie.get(), com.moonstone.moonstonemod.entity.client.red.ZombieRenderer::new);
 
         }
         @SubscribeEvent
@@ -96,6 +97,10 @@ public class MoonStoneMod {
                 event.registerShader(new ShaderInstance(event.getResourceProvider(),
                         ResourceLocation.fromNamespaceAndPath(MODID,"trail"),
                         DefaultVertexFormat.POSITION_TEX_COLOR),MRender::setShaderInstance_trail);
+
+                event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                        ResourceLocation.fromNamespaceAndPath(MODID,"eye"),
+                        DefaultVertexFormat.POSITION_TEX_COLOR),MRender::setShaderInstance_EYE);
             }catch (IOException exception){
                 exception.printStackTrace();
             }

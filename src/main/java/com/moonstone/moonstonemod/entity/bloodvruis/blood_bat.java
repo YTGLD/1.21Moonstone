@@ -46,12 +46,12 @@ public class blood_bat extends TamableAnimal {
 
     public Multimap<Holder<Attribute>, AttributeModifier> getAtt() {
         Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap = HashMultimap.create();
-        modifierMultimap.put(Attributes.ARMOR, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"moonstone.bat"), 10, AttributeModifier.Operation.ADD_VALUE));
+        modifierMultimap.put(Attributes.ARMOR, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"moonstone.bat.armor"), 10, AttributeModifier.Operation.ADD_VALUE));
         return modifierMultimap;
     }
     public Multimap<Holder<Attribute>, AttributeModifier> Rage() {
         Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap = HashMultimap.create();
-        modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"moonstone.bat"), -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"moonstone.bat.damage"), -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         return modifierMultimap;
     }
     @Override

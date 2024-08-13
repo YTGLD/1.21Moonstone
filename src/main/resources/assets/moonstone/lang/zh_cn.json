@@ -832,7 +832,10 @@
   "advancements.tooltip.max_sword.hand": "吃我一斧！",
   "advancements.tooltip.max_sword.text": "获得诺克萨斯纹章",
 
-  "effect.moonstone.rage": "狂暴",
+  "advancements.tooltip.max_blood_eye.hand": "总有改变的时候",
+  "advancements.tooltip.max_blood_eye.text": "制作校准之眼",
+
+  "effect.moonstone.rage": "重伤",
   "effect.moonstone.fear": "恐惧",
   "effect.moonstone.pain": "痛苦",
   "effect.moonstone.blood": "流血",
@@ -852,7 +855,14 @@
   "item.max_sword.tool.string.1": "当血球数量超过8时",
   "item.max_sword.tool.string.2": "下一次斩击将造成4倍伤害",
   "item.max_sword.tool.string.3": "血球会随着时间的流失而被你吸收",
-  "item.max_sword.tool.string.4": "每次吸收都会恢复一定的百分比生命值"
+  "item.max_sword.tool.string.4": "每次吸收都会恢复一定的百分比生命值",
+
+  "item.moonstone.max_blood_eye": "§4校准之眼",
+  "item.max_blood_eye.tool.string": "每次全力攻击都会施加流血（叠加）",
+  "item.max_blood_eye.tool.string.1": "当流血层数超过3时",
+  "item.max_blood_eye.tool.string.2": "产生一次血爆造成伤害,并清除流血状态",
+  "item.max_blood_eye.tool.string.3": "被波及者获得流血，如果状态已存在，则转换成重伤",
+  "item.max_blood_eye.tool.string.4": "冷却时间1秒"
 }
 
 

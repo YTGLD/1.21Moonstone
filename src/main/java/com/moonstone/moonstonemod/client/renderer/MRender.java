@@ -19,8 +19,10 @@ public class MRender extends RenderType {
     private static ShaderInstance ShaderInstance_ging;
     private static ShaderInstance ShaderInstance_trail;
     public static ShaderInstance meteorTrailShader;
+    public static ShaderInstance Shader_EYE;
 
     protected static final RenderStateShard.ShaderStateShard RENDER_STATE_SHARD_meteorTrailShader = new RenderStateShard.ShaderStateShard(MRender::getShaderInstance_meteorTrailShader);
+    protected static final RenderStateShard.ShaderStateShard RENDER_STATE_SHARD_Shader_EYE = new RenderStateShard.ShaderStateShard(MRender::getShaderInstance_Shader_EYE);
 
     protected static final RenderStateShard.ShaderStateShard RENDER_STATE_SHARD = new RenderStateShard.ShaderStateShard(MRender::getShaderInstance_gateway);
     protected static final RenderStateShard.ShaderStateShard RENDER_STATE_SHARD_MLS = new RenderStateShard.ShaderStateShard(MRender::getShaderInstance_mls);
@@ -49,7 +51,21 @@ public class MRender extends RenderType {
                             .setLayeringState(VIEW_OFFSET_Z_LAYERING).setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                             .setOutputState(ITEM_ENTITY_TARGET).setWriteMaskState(COLOR_DEPTH_WRITE).setCullState(NO_CULL)
                             .createCompositeState(false));
-
+        private static final RenderType EYE =
+            create("eye",
+                    DefaultVertexFormat.POSITION,
+                    VertexFormat.Mode.QUADS,
+                    256,
+                    false,
+                    false,
+                    RenderType.CompositeState.builder()
+                            .setShaderState(RENDER_STATE_SHARD_Shader_EYE)
+                            .setTextureState(RenderStateShard.
+                                    MultiTextureStateShard.builder().
+                                    add(ResourceLocation.fromNamespaceAndPath(MoonStoneMod.MODID,"textures/eye.png"),
+                                            false,
+                                            false).add(ResourceLocation.fromNamespaceAndPath(MoonStoneMod.MODID,"textures/eye.png"),
+                                            false, false).build()).createCompositeState(false));
 
     private static final RenderType GATEWAY =
             create("gateway",
@@ -107,15 +123,16 @@ public class MRender extends RenderType {
     public static RenderType getMls() {
         return MLS;
     }
-    public static RenderType getMeteorTrail() {
-        return METEOR_TRAIL;
-    }
+
     public static RenderType ging() {
         return GING;
     }
+    public static RenderType eye() {
+        return EYE;
+    }
 
-    public static void set_meteorTrailShader(ShaderInstance shaderInstance_ging) {
-        meteorTrailShader = shaderInstance_ging;
+    public static ShaderInstance getShaderInstance_Shader_EYE() {
+        return Shader_EYE;
     }
     public static ShaderInstance getShaderInstance_mls() {
         return ShaderInstance_mls;
@@ -126,7 +143,9 @@ public class MRender extends RenderType {
     public static ShaderInstance getShaderInstance_trail() {
         return ShaderInstance_trail;
     }
-
+    public static void setShaderInstance_EYE(ShaderInstance shaderInstance_ging) {
+        Shader_EYE = shaderInstance_ging;
+    }
     public static void setShaderInstance_ging(ShaderInstance shaderInstance_ging) {
         ShaderInstance_ging = shaderInstance_ging;
     }

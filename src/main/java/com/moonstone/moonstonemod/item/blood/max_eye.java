@@ -1,9 +1,10 @@
-package com.moonstone.moonstonemod.item.maxitem;
+package com.moonstone.moonstonemod.item.blood;
 
 import com.moonstone.moonstonemod.Handler;
 import com.moonstone.moonstonemod.init.DataReg;
 import com.moonstone.moonstonemod.init.Effects;
 import com.moonstone.moonstonemod.init.Items;
+import com.moonstone.moonstonemod.moonstoneitem.Blood;
 import com.moonstone.moonstonemod.moonstoneitem.Iplague;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -34,7 +35,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class max_eye extends Item implements Iplague, ICurioItem {
+public class max_eye extends Item implements ICurioItem, Blood {
     public static final String blood="MaxBlood";
     public max_eye() {
         super(new Properties().stacksTo(1).durability(1000000000).rarity(Rarity.UNCOMMON));

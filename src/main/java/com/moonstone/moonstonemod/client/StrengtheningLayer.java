@@ -8,6 +8,7 @@ import com.moonstone.moonstonemod.Handler;
 import com.moonstone.moonstonemod.client.renderer.MRender;
 import com.moonstone.moonstonemod.entity.bloodvruis.test_blood;
 import com.moonstone.moonstonemod.entity.nightmare.nightmare_giant;
+import com.moonstone.moonstonemod.entity.zombie.blood_zombie;
 import com.moonstone.moonstonemod.entity.zombie.red_entity;
 import com.moonstone.moonstonemod.entity.zombie.test_e;
 import com.moonstone.moonstonemod.init.Items;
@@ -116,6 +117,9 @@ public class StrengtheningLayer<T extends LivingEntity, M extends EntityModel<T>
             new CircleCubeBoom(matrices, vertexConsumers, light, entity);
         }
 
+        if (entity instanceof blood_zombie){
+            new BloodBoom(matrices, vertexConsumers, light, entity);
+        }
     }
     public void gorillacake(@NotNull PoseStack matrices,
                     @NotNull MultiBufferSource vertexConsumers,

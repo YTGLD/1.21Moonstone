@@ -2,8 +2,9 @@ package com.moonstone.moonstonemod.event;
 
 import com.moonstone.moonstonemod.init.Effects;
 import com.moonstone.moonstonemod.item.BloodVirus.dna.bat_cell;
-import com.moonstone.moonstonemod.item.maxitem.max_eye;
-import com.moonstone.moonstonemod.item.maxitem.max_sword;
+import com.moonstone.moonstonemod.item.blood.max_blood_eye;
+import com.moonstone.moonstonemod.item.blood.max_eye;
+import com.moonstone.moonstonemod.item.blood.max_sword;
 import com.moonstone.moonstonemod.item.nightmare.nightmare_head;
 import com.moonstone.moonstonemod.item.nightmare.nightmare_heart;
 import com.moonstone.moonstonemod.item.nightmare.nightmare_orb;
@@ -27,6 +28,7 @@ public class NewEvent {
         bat_cell.Bat(event);
         max_sword.hurt(event);
         max_eye.A(event);
+        max_blood_eye.Att(event);
     }
 
     @SubscribeEvent
@@ -44,6 +46,15 @@ public class NewEvent {
                 if (!living.level().isClientSide){
                     if (living.tickCount%20==0){
                         living.hurt(living.damageSources().magic(),living.getEffect(Effects.blood).getAmplifier());
+                        living.invulnerableTime = 0;
+                    }
+                }
+            }
+            if (living.hasEffect(Effects.rage)&&living.getEffect(Effects.rage)!=null) {
+                if (!living.level().isClientSide){
+                    if (living.tickCount%10==0){
+                        living.hurt(living.damageSources().magic(),living.getEffect(Effects.rage).getAmplifier()+0.5f);
+                        living.invulnerableTime = 0;
                     }
                 }
             }

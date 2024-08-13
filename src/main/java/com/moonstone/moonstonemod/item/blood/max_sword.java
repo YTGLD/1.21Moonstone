@@ -1,10 +1,11 @@
-package com.moonstone.moonstonemod.item.maxitem;
+package com.moonstone.moonstonemod.item.blood;
 
 import com.moonstone.moonstonemod.Handler;
 import com.moonstone.moonstonemod.init.DataReg;
 import com.moonstone.moonstonemod.init.Effects;
 import com.moonstone.moonstonemod.init.Items;
 import com.moonstone.moonstonemod.item.BloodVirus.Skill.batskill;
+import com.moonstone.moonstonemod.moonstoneitem.Blood;
 import com.moonstone.moonstonemod.moonstoneitem.Doom;
 import com.moonstone.moonstonemod.moonstoneitem.Iplague;
 import net.minecraft.ChatFormatting;
@@ -43,7 +44,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class max_sword  extends Item implements Iplague, ICurioItem {
+public class max_sword  extends Item implements ICurioItem , Blood {
     public static final String MaxSword = "MaxSword";
 
 

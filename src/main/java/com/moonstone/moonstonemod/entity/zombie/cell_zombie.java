@@ -63,16 +63,16 @@ public class cell_zombie extends TamableAnimal {
     private Multimap<Holder<Attribute>, AttributeModifier> calcificationMultimap(LivingEntity livingEntity){
        Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap = HashMultimap.create();
         if (Handler.hascurio(livingEntity, Items.cell.get())&&Handler.hascurio(livingEntity, Items.cell_calcification.get())) {
-            modifierMultimap.put(Attributes.ARMOR, new AttributeModifier(ResourceLocation.withDefaultNamespace("Cell"), livingEntity.getAttributeValue(Attributes.ARMOR) / 2, AttributeModifier.Operation.ADD_VALUE));
-            modifierMultimap.put(Attributes.MAX_HEALTH, new AttributeModifier(ResourceLocation.withDefaultNamespace("Cell"), livingEntity.getAttributeValue(Attributes.MAX_HEALTH) / 2, AttributeModifier.Operation.ADD_VALUE));
+            modifierMultimap.put(Attributes.ARMOR, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"cell_armor"), livingEntity.getAttributeValue(Attributes.ARMOR) / 2, AttributeModifier.Operation.ADD_VALUE));
+            modifierMultimap.put(Attributes.MAX_HEALTH, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"cell_health"), livingEntity.getAttributeValue(Attributes.MAX_HEALTH) / 2, AttributeModifier.Operation.ADD_VALUE));
         }
         return modifierMultimap;
     }
     private Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap(LivingEntity livingEntity){
        Multimap<Holder<Attribute>, AttributeModifier> modifierMultimap = HashMultimap.create();
         if (Handler.hascurio(livingEntity, Items.cell.get())&&Handler.hascurio(livingEntity, Items.adrenaline.get())) {
-            modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("Cell"), livingEntity.getAttributeValue(Attributes.ATTACK_DAMAGE), AttributeModifier.Operation.ADD_VALUE));
-            modifierMultimap.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(ResourceLocation.withDefaultNamespace("Cell"), livingEntity.getAttributeValue(Attributes.MOVEMENT_SPEED), AttributeModifier.Operation.ADD_VALUE));
+            modifierMultimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"cell_damage"), livingEntity.getAttributeValue(Attributes.ATTACK_DAMAGE), AttributeModifier.Operation.ADD_VALUE));
+            modifierMultimap.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"+"cell_speed"), livingEntity.getAttributeValue(Attributes.MOVEMENT_SPEED), AttributeModifier.Operation.ADD_VALUE));
         }
         return modifierMultimap;
     }
