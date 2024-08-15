@@ -5,14 +5,15 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-public class blood_zombie extends cell_zombie {
+public class blood_zombie_boom  extends cell_zombie {
 
-    public blood_zombie(EntityType<? extends blood_zombie> p_27412_, Level p_27413_) {
+    public blood_zombie_boom(EntityType<? extends blood_zombie_boom> p_27412_, Level p_27413_) {
         super(p_27412_, p_27413_);
         this.setNoAi(true);
     }
     public int time = 0;
     public void tick() {
+
         super.tick();
         this.setNoAi(true);
         this.setNoGravity(true);

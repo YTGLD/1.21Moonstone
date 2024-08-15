@@ -27,7 +27,7 @@ public class cell extends TheNecoraIC {
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
         Multimap<Holder<Attribute>, AttributeModifier> linkedHashMultimap = HashMultimap.create();
         CuriosApi
-                .addSlotModifier(linkedHashMultimap, "dna", ResourceLocation.withDefaultNamespace("base_attack_damage"+this.getDescriptionId()), 3, AttributeModifier.Operation.ADD_VALUE);
+                .addSlotModifier(linkedHashMultimap, "dna", ResourceLocation.withDefaultNamespace("base_attack_damage"+this.getDescriptionId()), 2, AttributeModifier.Operation.ADD_VALUE);
         return linkedHashMultimap;
     }
     @Override

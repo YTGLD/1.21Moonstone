@@ -53,6 +53,10 @@ public class EntityTs {
     public static final DeferredHolder<EntityType<?>,EntityType<com.moonstone.moonstonemod.entity.zombie.blood_zombie>> blood_zombie = REGISTRY.register("blood_zombie",
             ()-> EntityType.Builder.of(com.moonstone.moonstonemod.entity.zombie.blood_zombie::new, MobCategory.MONSTER).sized(1, 1).clientTrackingRange(16).build("blood_zombie"));
 
+    public static final DeferredHolder<EntityType<?>,EntityType<com.moonstone.moonstonemod.entity.zombie.blood_zombie_fly>> blood_zombie_fly = REGISTRY.register("blood_zombie_fly",
+            ()-> EntityType.Builder.of(com.moonstone.moonstonemod.entity.zombie.blood_zombie_fly::new, MobCategory.MONSTER).sized(1, 1).clientTrackingRange(16).build("blood_zombie_fly"));
+    public static final DeferredHolder<EntityType<?>,EntityType<com.moonstone.moonstonemod.entity.zombie.blood_zombie_boom>> blood_zombie_boom = REGISTRY.register("blood_zombie_boom",
+            ()-> EntityType.Builder.of(com.moonstone.moonstonemod.entity.zombie.blood_zombie_boom::new, MobCategory.MONSTER).sized(1, 1).clientTrackingRange(16).build("blood_zombie_boom"));
 
 
     @SubscribeEvent
@@ -66,6 +70,7 @@ public class EntityTs {
         event.put(EntityTs.test_blood.get(), Zombie.createAttributes().build());
         event.put(EntityTs.blood_bat.get(), Zombie.createAttributes().build());
         event.put(EntityTs.blood_zombie.get(), Zombie.createAttributes().build());
+        event.put(EntityTs.blood_zombie_boom.get(), Zombie.createAttributes().build());
 
     }
 }

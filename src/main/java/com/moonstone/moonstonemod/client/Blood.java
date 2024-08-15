@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.moonstone.moonstonemod.Handler;
 import com.moonstone.moonstonemod.client.renderer.MRender;
+import com.moonstone.moonstonemod.entity.zombie.blood_zombie_fly;
 import com.moonstone.moonstonemod.init.DataReg;
 import com.moonstone.moonstonemod.init.Items;
 import com.moonstone.moonstonemod.item.blood.max_eye;
@@ -25,103 +26,12 @@ public class Blood {
                  @NotNull MultiBufferSource vertexConsumers,
                  int light,
                  @NotNull Entity entity) {
-        if (entity instanceof LivingEntity living) {
-            if (Handler.hascurio(living, Items.max_eye.get())) {
-                CuriosApi.getCuriosInventory(living).ifPresent(handler -> {
-                    Map<String, ICurioStacksHandler> curios = handler.getCurios();
-                    for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
-                        ICurioStacksHandler stacksHandler = entry.getValue();
-                        IDynamicStackHandler stackHandler = stacksHandler.getStacks();
-                        for (int i = 0; i < stacksHandler.getSlots(); i++) {
-                            ItemStack stack = stackHandler.getStackInSlot(i);
-                            if (!stack.isEmpty()) {
-                                if (stack.is(Items.max_eye.get())) {
-                                    if (stack.get(DataReg.tag) != null) {
-                                        {
-                                            float size = stack.get(DataReg.tag).getFloat(max_eye.blood)+0.1f;
-                                            matrices.pushPose();
-                                            matrices.scale(0.33f,0.33f,0.33f);
-                                            matrices.translate(0, -2, 0.5);
-                                            renderSphere1(matrices, vertexConsumers, light, size);
-                                            matrices.popPose();
-                                            {
-                                                matrices.pushPose();
-                                                matrices.scale(0.33f,0.33f,0.33f);
-                                                int s = living.tickCount % 360;
-                                                if (s > 180) {
-                                                    s = 0;
-                                                }
-                                                matrices.mulPose(Axis.YN.rotationDegrees(s));
-                                                matrices.mulPose(Axis.XN.rotationDegrees(s));
-
-                                                matrices.translate(0, -2, 0.25);
-                                                renderSphere1(matrices, vertexConsumers, light, 0.2f);
-                                                matrices.popPose();
-
-                                            }
-                                            {
-                                                matrices.pushPose();
-                                                matrices.scale(0.33f,0.33f,0.33f);
-                                                int s = living.tickCount * 2 % 360;
-                                                if (s > 180) {
-                                                    s = 0;
-                                                }
-                                                matrices.mulPose(Axis.YN.rotationDegrees(s));
-                                                matrices.mulPose(Axis.XN.rotationDegrees(s));
-
-                                                matrices.translate(0, -2, 0.25);
-                                                renderSphere1(matrices, vertexConsumers, light, 0.2f);
-                                                matrices.popPose();
-
-                                            }
-
-                                            {
-                                                matrices.pushPose();
-                                                matrices.scale(0.33f,0.33f,0.33f);
-                                                matrices.mulPose(Axis.ZP.rotationDegrees(180));
-                                                matrices.mulPose(Axis.YP.rotationDegrees(180));
-                                                matrices.mulPose(Axis.XP.rotationDegrees(180));
-                                                int s = living.tickCount * 3 % 360;
-                                                if (s > 180) {
-                                                    s = 0;
-                                                }
-                                                matrices.mulPose(Axis.YN.rotationDegrees(s));
-                                                matrices.mulPose(Axis.XN.rotationDegrees(s));
-
-                                                matrices.translate(0, -2, 0.25);
-                                                renderSphere1(matrices, vertexConsumers, light, 0.2f);
-                                                matrices.popPose();
-
-                                            }
-                                            {
-                                                matrices.pushPose();
-                                                matrices.scale(0.33f,0.33f,0.33f);
-                                                matrices.mulPose(Axis.ZP.rotationDegrees(180));
-                                                matrices.mulPose(Axis.YP.rotationDegrees(180));
-                                                matrices.mulPose(Axis.XP.rotationDegrees(180));
-
-                                                int s = living.tickCount * 4 % 360;
-                                                if (s > 180) {
-                                                    s = 0;
-                                                }
-                                                matrices.mulPose(Axis.YN.rotationDegrees(s));
-                                                matrices.mulPose(Axis.XN.rotationDegrees(s));
-
-                                                matrices.translate(0, -2, 0.25);
-                                                renderSphere1(matrices, vertexConsumers, light, 0.2f);
-                                                matrices.popPose();
-
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-
+        if (entity instanceof blood_zombie_fly living) {
+            float size = 0.5f;
+            matrices.pushPose();
+            matrices.scale(0.33f,0.33f,0.33f);
+            renderSphere1(matrices, vertexConsumers, light, size);
+            matrices.popPose();
         }
     }
     public void renderSphere1(@NotNull PoseStack matrices, @NotNull MultiBufferSource vertexConsumers, int light, float s) {

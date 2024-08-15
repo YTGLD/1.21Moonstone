@@ -1,5 +1,8 @@
 {
   "curios.modifiers.dna": "植入DNA时",
+
+  "key.moonstone.category": "月之石",
+  "key.moonstone.desc": "技能",
   "key.moonstone.y": "技能",
   "key.categories.moonstone.moonstone_category": "Moonstone",
   "moonstone.book.error": "你需要安装帕秋莉手册",
@@ -835,6 +838,9 @@
   "advancements.tooltip.max_blood_eye.hand": "总有改变的时候",
   "advancements.tooltip.max_blood_eye.text": "制作校准之眼",
 
+  "advancements.tooltip.max_blood_cube.hand": "注视我！",
+  "advancements.tooltip.max_blood_cube.text": "制作复仇之骰",
+
   "effect.moonstone.rage": "重伤",
   "effect.moonstone.fear": "恐惧",
   "effect.moonstone.pain": "痛苦",
@@ -862,7 +868,12 @@
   "item.max_blood_eye.tool.string.1": "当流血层数超过3时",
   "item.max_blood_eye.tool.string.2": "产生一次血爆造成伤害,并清除流血状态",
   "item.max_blood_eye.tool.string.3": "被波及者获得流血，如果状态已存在，则转换成重伤",
-  "item.max_blood_eye.tool.string.4": "冷却时间1秒"
+  "item.max_blood_eye.tool.string.4": "冷却时间1秒",
+
+
+  "item.moonstone.max_blood_cube": "§4复仇之骰",
+  "item.max_blood_cube.tool.string": "拿着任意物品对准生物潜行并长按右键释放技能",
+  "item.max_blood_cube.tool.string.1": "技能期间无法移动"
 }
 
 

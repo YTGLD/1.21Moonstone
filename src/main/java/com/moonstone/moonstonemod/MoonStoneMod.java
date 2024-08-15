@@ -7,10 +7,7 @@ import com.moonstone.moonstonemod.client.particle.blue;
 import com.moonstone.moonstonemod.client.particle.popr;
 import com.moonstone.moonstonemod.client.particle.red;
 import com.moonstone.moonstonemod.client.renderer.MRender;
-import com.moonstone.moonstonemod.entity.client.CellZombieG;
-import com.moonstone.moonstonemod.entity.client.SwordRenderer;
-import com.moonstone.moonstonemod.entity.client.ZombieRenderer;
-import com.moonstone.moonstonemod.entity.client.CellZombieN;
+import com.moonstone.moonstonemod.entity.client.*;
 import com.moonstone.moonstonemod.event.*;
 import com.moonstone.moonstonemod.init.*;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -23,10 +20,13 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
+import top.theillusivec4.curios.client.KeyRegistry;
 
 import java.io.IOException;
 
@@ -52,7 +52,6 @@ public class MoonStoneMod {
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
-
     @EventBusSubscriber(modid = MoonStoneMod.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
     public static class Client {
         @SubscribeEvent
@@ -61,7 +60,6 @@ public class MoonStoneMod {
             event.registerSpriteSet(Particles.blue.get(), blue.Provider::new);
             event.registerSpriteSet(Particles.popr.get(), popr.Provider::new);
         }
-
         @SubscribeEvent
         public static void EntityRenderersEvent(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(EntityTs.flysword.get(), SwordRenderer::new);
@@ -75,6 +73,8 @@ public class MoonStoneMod {
             event.registerEntityRenderer(EntityTs.blood_bat.get(), BloodBatRenderer::new);
             event.registerEntityRenderer(EntityTs.test_blood.get(), com.moonstone.moonstonemod.entity.client.red.ZombieRenderer::new);
             event.registerEntityRenderer(EntityTs.blood_zombie.get(), com.moonstone.moonstonemod.entity.client.red.ZombieRenderer::new);
+            event.registerEntityRenderer(EntityTs.blood_zombie_fly.get(), BloodSwordRenderer::new);
+            event.registerEntityRenderer(EntityTs.blood_zombie_boom.get(), com.moonstone.moonstonemod.entity.client.red.ZombieRenderer::new);
 
         }
         @SubscribeEvent

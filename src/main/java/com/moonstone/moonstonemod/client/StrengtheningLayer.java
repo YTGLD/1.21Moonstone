@@ -9,6 +9,7 @@ import com.moonstone.moonstonemod.client.renderer.MRender;
 import com.moonstone.moonstonemod.entity.bloodvruis.test_blood;
 import com.moonstone.moonstonemod.entity.nightmare.nightmare_giant;
 import com.moonstone.moonstonemod.entity.zombie.blood_zombie;
+import com.moonstone.moonstonemod.entity.zombie.blood_zombie_boom;
 import com.moonstone.moonstonemod.entity.zombie.red_entity;
 import com.moonstone.moonstonemod.entity.zombie.test_e;
 import com.moonstone.moonstonemod.init.Items;
@@ -50,7 +51,12 @@ public class StrengtheningLayer<T extends LivingEntity, M extends EntityModel<T>
 
         new Sword(matrices, vertexConsumers, light, entity);
 
-
+        if (entity instanceof blood_zombie_boom){
+            matrices.pushPose();
+            matrices.scale(0.25f,0.25f,0.25f);
+            new BloodBoom(matrices, vertexConsumers, light, entity);
+            matrices.popPose();
+        }
         if (entity instanceof test_blood){
             matrices.scale(0.33f,0.33f,0.33f);
             new CircleCubeBoom(matrices, vertexConsumers, light, entity);
@@ -118,8 +124,10 @@ public class StrengtheningLayer<T extends LivingEntity, M extends EntityModel<T>
         }
 
         if (entity instanceof blood_zombie){
+
             new BloodBoom(matrices, vertexConsumers, light, entity);
         }
+
     }
     public void gorillacake(@NotNull PoseStack matrices,
                     @NotNull MultiBufferSource vertexConsumers,

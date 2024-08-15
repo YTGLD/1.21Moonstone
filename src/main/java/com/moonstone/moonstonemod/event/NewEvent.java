@@ -2,6 +2,7 @@ package com.moonstone.moonstonemod.event;
 
 import com.moonstone.moonstonemod.init.Effects;
 import com.moonstone.moonstonemod.item.BloodVirus.dna.bat_cell;
+import com.moonstone.moonstonemod.item.blood.max_blood_cube;
 import com.moonstone.moonstonemod.item.blood.max_blood_eye;
 import com.moonstone.moonstonemod.item.blood.max_eye;
 import com.moonstone.moonstonemod.item.blood.max_sword;
@@ -13,6 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class NewEvent {
@@ -29,6 +31,10 @@ public class NewEvent {
         max_sword.hurt(event);
         max_eye.A(event);
         max_blood_eye.Att(event);
+    }
+    @SubscribeEvent
+    public void EntityInteract(PlayerInteractEvent.RightClickItem event){
+        max_blood_cube.RightClickItem(event);
     }
 
     @SubscribeEvent

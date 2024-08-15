@@ -1,5 +1,7 @@
 {
   "curios.modifiers.necora": "when necora",
+  "key.moonstone.category": "Moonstone",
+  "key.moonstone.desc": "Skill",
   "key.moonstone.y": "skill",
   "key.categories.moonstone.moonstone_category": "Moonstone",
   "moonstone.book.error": "you need patchouli mod",
@@ -833,6 +835,14 @@
   "item.nightmare_head.tool.string.5": "Maximum health restored after wearing",
   "item.nightmare_head.tool.string.6": "Reduce the curse of the abyss by 100%",
   "item.nightmare_head.tool.string.7": "Unable to remove normally",
-  "item.nightmare_head.tool.string.8": "And there will always be a ratio between your health and maximum health"
+  "item.nightmare_head.tool.string.8": "And there will always be a ratio between your health and maximum health",
+
+
+  "advancements.tooltip.max_blood_cube.hand": "see me！",
+  "advancements.tooltip.max_blood_cube.text": "max blood cube",
+
+  "item.moonstone.max_blood_cube": "max blood cube",
+  "item.max_blood_cube.tool.string": "Aim at the creature and stealth, then long press and right-click to release the skill",
+  "item.max_blood_cube.tool.string.1": "Cannot attack during skill period"
 }
 

@@ -32,8 +32,8 @@ public class BloodBoom {
 
     public void renderSphere1(@NotNull PoseStack matrices, @NotNull MultiBufferSource vertexConsumers, int light, float s,float a) {
         float radius = s; // 球体的半径
-        int stacks = 32; // 垂直方向的分割数
-        int slices = 32; // 水平方向的分割数
+        int stacks = 48; // 垂直方向的分割数
+        int slices = 48; // 水平方向的分割数
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(MRender.translucent());
         for (int i = 0; i < stacks; ++i) {
             float phi0 = (float) Math.PI * ((i + 0) / (float) stacks);
